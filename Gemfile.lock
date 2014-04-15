@@ -40,6 +40,9 @@ GEM
     coffee-script-source (1.7.0)
     erubis (2.7.0)
     execjs (2.0.2)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     haml (4.0.5)
       tilt
     hike (1.2.3)
@@ -125,6 +128,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 3.1.1)
   coffee-rails (~> 4.0.0)
+  figaro
   haml (~> 4.0.5)
   jbuilder (~> 2.0)
   jquery-rails
