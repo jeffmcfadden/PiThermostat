@@ -1,9 +1,13 @@
 .row
   .col-md-12
 
-    .jumbotron{ style: "margin-top: 1em;" } 
+    .jumbotron{ style: "margin-top: 1em;" }
       %h1
         Thermostat
-        %small
-          = @f.round(2)
+
+
+.row
+  .col-md-4
+    .well
+      = render partial: "thermostat", locals: { thermostat: @thermostats.first } if @thermostats.count > 0
 

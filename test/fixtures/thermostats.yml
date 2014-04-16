@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  current_temperature: 1.5
+  target_temperature: 1.5
+  mode: 1
+  running: false
+
+two:
+  name: MyString
+  current_temperature: 1.5
+  target_temperature: 1.5
+  mode: 1
+  running: false
