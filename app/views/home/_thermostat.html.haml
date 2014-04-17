@@ -7,7 +7,27 @@
   %dd
     = thermostat.current_temperature
     °F
+  
+  %dt
+    Target Temperature
+  %dd
+    = thermostat.target_temperature
+    °F
+  
+  %dt
+    Hysteresis 
+  %dd
+    = thermostat.hysteresis
+    °F
+  
+  %dt
+    Running?
+  %dd
+    = thermostat.running?
+
   %dt
     Updated At
   %dd
     = thermostat.updated_at
+    = "(#{time_ago_in_words( thermostat.updated_at ) } ago)"
+

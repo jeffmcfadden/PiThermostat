@@ -36,6 +36,7 @@ class Thermostat < ActiveRecord::Base
       puts "We're in development or we would be doing: gpio write 0 0"
     end
 
+    self.update_column( :running, true )
   end
 
   def _turn_cool_off
@@ -44,6 +45,8 @@ class Thermostat < ActiveRecord::Base
     else
       puts "We're in development or we would be doing: gpio write 0 1"
     end
+    
+    self.update_column( :running, false )
   end
 
 end
