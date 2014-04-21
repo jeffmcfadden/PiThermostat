@@ -7,19 +7,19 @@
   %dd
     = thermostat.current_temperature
     °F
-  
+
   %dt
     Target Temperature
   %dd
     = thermostat.target_temperature
     °F
-  
+
   %dt
-    Hysteresis 
+    Hysteresis
   %dd
     = thermostat.hysteresis
     °F
-  
+
   %dt
     Running?
   %dd
@@ -31,3 +31,4 @@
     = thermostat.updated_at
     = "(#{time_ago_in_words( thermostat.updated_at ) } ago)"
 
+  = render partial: "history", locals: { history: thermostat.thermostat_histories.today.first }

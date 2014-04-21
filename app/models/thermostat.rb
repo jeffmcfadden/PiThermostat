@@ -1,6 +1,8 @@
 class Thermostat < ActiveRecord::Base
   enum mode: [ :off, :fan, :heat, :cool ]
 
+  has_many :thermostat_histories
+
   after_save :perform_thermostat_logic!
 
   def perform_thermostat_logic!
@@ -45,7 +47,7 @@ class Thermostat < ActiveRecord::Base
     else
       puts "We're in development or we would be doing: gpio write 0 1"
     end
-    
+
     self.update_column( :running, false )
   end
 

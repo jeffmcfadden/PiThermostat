@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :thermostats
+  resources :thermostats do
+    member do
+      get '/log_current_data' => "thermostats#log_current_data", as: :log_current_data
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
