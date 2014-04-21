@@ -20,7 +20,7 @@ class ThermostatsController < ApplicationController
 
     @history.capture_current_data!
 
-    respond_with @history
+    respond_with [@thermostat, @history]
   end
 
   private
