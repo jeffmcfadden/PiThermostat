@@ -12,7 +12,7 @@ class ThermostatsController < ApplicationController
   private
 
   def thermostat_params
-    params.require( :thermostat ).permit( :name, :current_temperature, :target_temperature, :mode, :running )
+    params.require( :thermostat ).permit( :name, :current_temperature, :target_temperature, :mode, :running, :hysteresis )
   end
 
 end
