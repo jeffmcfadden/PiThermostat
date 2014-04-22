@@ -18,7 +18,7 @@ class ThermostatHistory < ActiveRecord::Base
   def capture_current_data!
     existing_data = JSON.parse( self.json_archive, symbolize_names: true ) rescue []
 
-    this_record = { ts: Time.zone.now.to_i,
+    this_record = { ts: Time.zone.now.strftime( "%s" ).to_i,
                     tt: self.thermostat.target_temperature,
                     ct: self.thermostat.current_temperature,
                     r: (self.thermostat.running? ? 1 : 0 ),
