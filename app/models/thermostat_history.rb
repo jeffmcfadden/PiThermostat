@@ -36,5 +36,15 @@ class ThermostatHistory < ActiveRecord::Base
     save
   end
 
+  def json_for_flot
+    existing_data = JSON.parse( self.json_archive, symbolize_names: true ) rescue []
+
+    for_flot = []
+    existing_data.each do |record|
+      for_flot.push( [record[:ts], record[:ct] ] )
+    end
+
+    for_flot.to_json
+  end
 
 end

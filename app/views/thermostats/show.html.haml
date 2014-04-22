@@ -51,4 +51,15 @@
         %td
           = rule.mode
 
+%h2 Today's Temperature
 
+.row
+  - random = rand( 999999 )
+
+  %div{ id: "graph_#{random}", style: 'width: 100%; height: 320px;' }
+
+:javascript
+  $( document ).ready( function(){
+    var d = #{@thermostat.thermostat_histories.today.first.json_for_flot} ;
+    $.plot($("\#graph_#{random}"), [d], { xaxis: { mode: "time", timezone: "-0700" } });
+    });
