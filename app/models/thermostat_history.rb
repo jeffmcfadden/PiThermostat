@@ -2,15 +2,15 @@ class ThermostatHistory < ActiveRecord::Base
   belongs_to :thermostat
 
   scope :now_for_thermostat,  -> (thermostat) {
-    year = Time.now.year
-    yday = Time.now.yday
+    year = Time.zone.now.year
+    yday = Time.zone.now.yday
 
     where( ["thermostat_id = ? AND year = ? AND day_of_year = ?", thermostat.id, year, yday] )
   }
 
   scope :today, -> {
-    year = Time.now.year
-    yday = Time.now.yday
+    year = Time.zone.now.year
+    yday = Time.zone.now.yday
 
     where( ["year = ? AND day_of_year = ?", year, yday] )
   }
@@ -18,7 +18,7 @@ class ThermostatHistory < ActiveRecord::Base
   def capture_current_data!
     existing_data = JSON.parse( self.json_archive, symbolize_names: true ) rescue []
 
-    this_record = { ts: Time.now.to_i,
+    this_record = { ts: Time.zone.now.to_i,
                     tt: self.thermostat.target_temperature,
                     ct: self.thermostat.current_temperature,
                     r: (self.thermostat.running? ? 1 : 0 ),

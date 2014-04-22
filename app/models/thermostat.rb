@@ -31,7 +31,7 @@ class Thermostat < ActiveRecord::Base
   end
 
   def active_schedule_rule( wday = nil, last = false )
-    wday = Time.now.wday if wday.nil?
+    wday = Time.zone.now.wday if wday.nil?
 
     schedule = self.active_schedule
 
@@ -48,7 +48,7 @@ class Thermostat < ActiveRecord::Base
         active_rule = rules.last
       else
         rules.each do |rule|
-          if ( ( rule.hour * 60 ) + rule.minute ) < ( ( Time.now.hour * 60 ) + Time.now.min )
+          if ( ( rule.hour * 60 ) + rule.minute ) < ( ( Time.zone.now.hour * 60 ) + Time.zone.now.min )
             active_rule = rule
           end
         end
