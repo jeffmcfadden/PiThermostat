@@ -41,7 +41,7 @@ class ThermostatHistory < ActiveRecord::Base
 
     for_flot = []
     existing_data.each do |record|
-      for_flot.push( ( [record[:ts] * 1000 ), record[:ct] ] ) #*1000 for js ms
+      for_flot.push( [ ( record[:ts] * 1000 ), record[:ct] ] ) #*1000 for js ms
     end
 
     for_flot.to_json
