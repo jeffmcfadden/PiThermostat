@@ -6,7 +6,12 @@ Rails.application.routes.draw do
     end
 
     resources :thermostat_histories
+
+    resources :thermostat_schedules do
+      resources :thermostat_schedule_rules
+    end
   end
+
 
 
 

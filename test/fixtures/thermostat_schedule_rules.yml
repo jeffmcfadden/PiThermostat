@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  thermostat_schedule_id: 
+  sunday: false
+  monday: false
+  tuesday: false
+  wednesday: false
+  thursday: false
+  friday: false
+  saturday: false
+  hour: 1
+  minute: 1
+  target_temperature: 1.5
+  hysteresis: 1.5
+  mode: MyString
+
+two:
+  thermostat_schedule_id: 
+  sunday: false
+  monday: false
+  tuesday: false
+  wednesday: false
+  thursday: false
+  friday: false
+  saturday: false
+  hour: 1
+  minute: 1
+  target_temperature: 1.5
+  hysteresis: 1.5
+  mode: MyString

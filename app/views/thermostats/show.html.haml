@@ -1,0 +1,54 @@
+%h1= @thermostat.name
+
+.well
+  %dl
+    %dt
+      Target Temperature:
+    %dd
+      = @thermostat.target_temperature.round(2)
+      °F
+    %dt
+      Current Temperature:
+    %dd
+      = @thermostat.current_temperature.round(2)
+      °F
+    %dt
+      Hysteresis:
+    %dd
+      = @thermostat.hysteresis
+      °F
+    %dt
+      Mode:
+    %dd
+      = @thermostat.mode
+
+    %dt
+      Override?
+    %dd
+      = @thermostat.on_override?
+      - if @thermostat.on_override?
+        = @thermostat.override_target_temperature
+        °F
+        = "until #{@thermostat.override_until}"
+
+
+%h2
+  Active Schedule:
+  = link_to @thermostat.active_schedule.name, thermostat_thermostat_schedule_path( @thermostat, @thermostat.active_schedule )
+
+%table.table
+  - if @thermostat.active_schedule.present?
+    - @thermostat.active_schedule.thermostat_schedule_rules.active_on_day(Time.now.wday).order_by_time.each do |rule|
+      %tr{ class: "#{@thermostat.active_schedule_rule == rule ? 'info' : '' }"}
+        %td
+          = '%02i' % rule.hour
+          \:
+          = '%02i' % rule.minute
+        %td
+          = rule.target_temperature
+        %td
+          = rule.hysteresis
+        %td
+          = rule.mode
+
+

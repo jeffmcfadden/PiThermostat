@@ -1,0 +1,71 @@
+= simple_form_for([thermostat, thermostat_schedule, thermostat_schedule_rule], html: {class: 'form-horizontal' }) do |f|
+  .form-group
+    = f.label :thermostat_schedule_id, class: "control-label col-sm-2"
+    .col-sm-10
+      %p.form-control-static
+        = thermostat_schedule.name
+      = f.hidden_field :thermostat_schedule_id
+
+
+  .row
+    .col-sm-2
+
+    .col-sm-1
+      S
+    .col-sm-1
+      M
+    .col-sm-1
+      T
+    .col-sm-1
+      W
+    .col-sm-1
+      T
+    .col-sm-1
+      F
+    .col-sm-1
+      S
+
+  .form-group
+    = f.label "Days", class: "control-label col-sm-2"
+    .col-sm-1
+      = f.check_box :sunday, class: "form-control "
+    .col-sm-1
+      = f.check_box :monday, class: "form-control "
+    .col-sm-1
+      = f.check_box :tuesday, class: "form-control "
+    .col-sm-1
+      = f.check_box :wednesday, class: "form-control "
+    .col-sm-1
+      = f.check_box :thursday, class: "form-control "
+    .col-sm-1
+      = f.check_box :friday, class: "form-control "
+    .col-sm-1
+      = f.check_box :saturday, class: "form-control "
+
+  .form-group
+    = f.label :target_temperature, class: "control-label col-sm-2"
+    .col-sm-10
+      = f.text_field :target_temperature, class: "form-control "
+
+  .form-group
+    = f.label "Time", class: "control-label col-sm-2"
+    .col-sm-1
+      = f.text_field :hour, class: "form-control ", placeholder: "HH"
+    .col-sm-1
+      = f.text_field :minute, class: "form-control ", placeholder: "MM"
+
+  .form-group
+    = f.label :hysteresis, class: "control-label col-sm-2"
+    .col-sm-10
+      = f.text_field :hysteresis, class: "form-control "
+
+  .form-group
+    = f.label :mode, class: "control-label col-sm-2"
+    .col-sm-10
+      = f.select :mode, options_for_select( ["off", "fan", "heat", "cool"], thermostat_schedule_rule.mode ), {}, class: "form-control "
+
+
+  .form-group
+    .col-sm-12
+      %button.btn.btn-primary.form-control{ type: "submit" }
+        Save

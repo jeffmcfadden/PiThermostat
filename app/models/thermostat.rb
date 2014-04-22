@@ -2,11 +2,73 @@ class Thermostat < ActiveRecord::Base
   enum mode: [ :off, :fan, :heat, :cool ]
 
   has_many :thermostat_histories
+  has_many :thermostat_schedules
 
   after_save :perform_thermostat_logic!
 
-  def perform_thermostat_logic!
+  def target_temperature
+    if self.on_override?
+      tt = self.override_target_temperature
+    else
+      tt = active_schedule_rule.target_temperature
+    end
 
+    tt
+  end
+
+  def hysteresis
+    if self.on_override?
+      h = self.override_hysteresis
+    else
+      h = active_schedule_rule.hysteresis
+    end
+
+    h
+  end
+
+  def active_schedule
+    self.thermostat_schedules.active.first
+  end
+
+  def active_schedule_rule( wday = nil, last = false )
+    wday = Time.now.wday if wday.nil?
+
+    schedule = self.active_schedule
+
+    # Iterate through the schedule rules.
+    # The idea is that if you get to a point where you've passed the trigger time
+    # for that rule, then it's active.
+    # The last case is where you never hit a rule, which means you're before *all* rules
+    # and therefore you should really be on the last rule from the previous day.
+    if schedule.present? && (schedule.thermostat_schedule_rules.active_on_any_day.count > 0)
+      active_rule = nil
+      rules = schedule.thermostat_schedule_rules.active_on_day( wday ).order_by_time
+
+      if last
+        active_rule = rules.last
+      else
+        rules.each do |rule|
+          if ( ( rule.hour * 60 ) + rule.minute ) < ( ( Time.now.hour * 60 ) + Time.now.min )
+            active_rule = rule
+          end
+        end
+      end
+
+      # Go find the last active rule from the previous day.
+      if active_rule.nil?
+        wday -= 1
+        wday = 6 if wday < 0
+        active_rule = active_schedule_rule( wday, true )
+      end
+
+      return active_rule
+    end
+
+    # Fallback rule if no active schedule.
+    ThermostatScheduleRule.new( target_temperature: 80, mode: :cool, hysteresis: 0.5 )
+  end
+
+  def perform_thermostat_logic!
     if cool?
 
       if self.current_temperature >= self.target_temperature + self.hysteresis
@@ -27,6 +89,10 @@ class Thermostat < ActiveRecord::Base
       # Do nothign right now
     end
 
+  end
+
+  def on_override?
+    self.override_until.present? && self.override_until > Time.now
   end
 
   private

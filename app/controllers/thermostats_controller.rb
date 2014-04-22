@@ -1,6 +1,12 @@
 class ThermostatsController < ApplicationController
   respond_to :html, :json
 
+  before_filter :load_thermostat
+
+  def new
+    respond_with @thermostat
+  end
+
   def update
     @thermostat = Thermostat.find( params[:id] )
 
@@ -28,5 +34,10 @@ class ThermostatsController < ApplicationController
   def thermostat_params
     params.require( :thermostat ).permit( :name, :current_temperature, :target_temperature, :mode, :running, :hysteresis )
   end
+
+  def load_thermostat
+    @thermostat = Thermostat.find( params[:id] )
+  end
+
 
 end

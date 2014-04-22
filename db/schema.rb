@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140421212051) do
+ActiveRecord::Schema.define(version: 20140422011427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,15 +36,46 @@ ActiveRecord::Schema.define(version: 20140421212051) do
   add_index "thermostat_histories", ["thermostat_id"], name: "index_thermostat_histories_on_thermostat_id", using: :btree
   add_index "thermostat_histories", ["year", "day_of_year"], name: "index_thermostat_histories_on_year_and_day_of_year", using: :btree
 
+  create_table "thermostat_schedule_rules", force: true do |t|
+    t.integer  "thermostat_schedule_id"
+    t.boolean  "sunday"
+    t.boolean  "monday"
+    t.boolean  "tuesday"
+    t.boolean  "wednesday"
+    t.boolean  "thursday"
+    t.boolean  "friday"
+    t.boolean  "saturday"
+    t.integer  "hour"
+    t.integer  "minute"
+    t.float    "target_temperature"
+    t.float    "hysteresis"
+    t.string   "mode"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "thermostat_schedule_rules", ["thermostat_schedule_id"], name: "index_thermostat_schedule_rules_on_thermostat_schedule_id", using: :btree
+
+  create_table "thermostat_schedules", force: true do |t|
+    t.string   "name"
+    t.integer  "thermostat_id"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "thermostat_schedules", ["thermostat_id"], name: "index_thermostat_schedules_on_thermostat_id", using: :btree
+
   create_table "thermostats", force: true do |t|
     t.string   "name"
     t.float    "current_temperature"
-    t.float    "target_temperature"
     t.integer  "mode"
     t.boolean  "running"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "hysteresis"
+    t.datetime "override_until"
+    t.float    "override_target_temperature"
+    t.float    "override_hysteresis"
   end
 
 end
