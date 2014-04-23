@@ -21,7 +21,7 @@ class ThermostatsController < ApplicationController
     @history = ThermostatHistory.now_for_thermostat( @thermostat ).first
 
     if @history.nil?
-      @history = ThermostatHistory.create( { thermostat: @thermostat, year: Time.now.year, day_of_year: Time.now.yday } )
+      @history = ThermostatHistory.create( { thermostat: @thermostat, year: Time.zone.now.year, day_of_year: Time.zone.now.yday } )
     end
 
     @history.capture_current_data!
