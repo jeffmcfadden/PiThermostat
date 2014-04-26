@@ -12,15 +12,15 @@ class ThermostatScheduleRule < ActiveRecord::Base
       where( sunday: true )
     elsif day == 1
       where( monday: true )
-    elsif day == 1
+    elsif day == 2
       where( tuesday: true )
-    elsif day == 1
+    elsif day == 3
       where( wednesday: true )
-    elsif day == 1
+    elsif day == 4
       where( thursday: true )
-    elsif day == 1
+    elsif day == 5
       where( friday: true )
-    elsif day == 1
+    elsif day == 6
       where( saturday: true )
     end
   }
