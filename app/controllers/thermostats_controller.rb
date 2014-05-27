@@ -10,6 +10,10 @@ class ThermostatsController < ApplicationController
   def update
     @thermostat = Thermostat.find( params[:id] )
 
+    if params[:override_value].present?
+      params[:thermostat][:override_until] = params[:override_value].to_i.hours.from_now
+    end
+
     @thermostat.update_attributes( thermostat_params )
 
     respond_with @thermostat
@@ -32,7 +36,7 @@ class ThermostatsController < ApplicationController
   private
 
   def thermostat_params
-    params.require( :thermostat ).permit( :name, :current_temperature, :target_temperature, :mode, :running, :hysteresis )
+    params.require( :thermostat ).permit( :name, :current_temperature, :target_temperature, :mode, :running, :hysteresis, :override_until, :override_target_temperature, :override_hysteresis )
   end
 
   def load_thermostat
