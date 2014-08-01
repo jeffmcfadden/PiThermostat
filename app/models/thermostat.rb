@@ -1,3 +1,6 @@
+# You have to do this before you an get things to work:
+# $ gpio mode 0 out
+
 class Thermostat < ActiveRecord::Base
   enum mode: [ :off, :fan, :heat, :cool ]
 
