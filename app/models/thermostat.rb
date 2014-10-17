@@ -80,14 +80,18 @@ class Thermostat < ActiveRecord::Base
         _turn_cool_off
       else
         # Do nothing, we're in the null zone.
-
       end
-
-
     elsif off?
-      # Turn it all off
+      _turn_cool_off
+      _turn_heat_off
     elsif heat?
-      # Do nothing right now
+      if self.current_temperature <= self.target_temperature - self.hysteresis
+        _turn_heat_on
+      elsif self.current_temperature >= self.target_temperature + self.hysteresis
+        _turn_heat_off
+      else
+        # Do nothing, we're in the null zone.
+      end
     elsif fan?
       # Do nothign right now
     end
@@ -115,6 +119,26 @@ class Thermostat < ActiveRecord::Base
       system "gpio write 0 1"
     else
       puts "We're in development or we would be doing: gpio write 0 1"
+    end
+
+    self.update_column( :running, false )
+  end
+
+  def _turn_heat_on
+    if Rails.env == 'production'
+      system "gpio write 1 0"
+    else
+      puts "We're in development or we would be doing: gpio write 1 0"
+    end
+
+    self.update_column( :running, true )
+  end
+
+  def _turn_heat_off
+    if Rails.env == 'production'
+      system "gpio write 1 1"
+    else
+      puts "We're in development or we would be doing: gpio write 1 1"
     end
 
     self.update_column( :running, false )
