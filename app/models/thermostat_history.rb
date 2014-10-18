@@ -47,4 +47,15 @@ class ThermostatHistory < ActiveRecord::Base
     for_flot.to_json
   end
 
+  def data_for_chartkick
+    existing_data = JSON.parse( self.json_archive, symbolize_names: true ) rescue []
+
+    for_chartkick = []
+    existing_data.each do |record|
+      for_chartkick.push( [ ( record[:ts] + (7*3600) ), record[:ct] ] ) # 7 * 3600 for timezone offset.
+    end
+
+    for_chartkick
+  end
+
 end

@@ -1,0 +1,2 @@
+* * * * * /usr/local/bin/ruby /www/thermostat/update_temp.rb > /dev/null
+* * * * * /usr/local/bin/ruby /www/thermostat/log_thermostat_data.rb > /dev/null
