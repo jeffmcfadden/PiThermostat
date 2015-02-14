@@ -3,7 +3,7 @@
 
 class Thermostat < ActiveRecord::Base
   enum mode: [ :off, :fan, :heat, :cool ]
-  enum override_mode: [ :off, :fan, :heat, :cool ]
+  enum override_mode: [ :override_mode_off, :override_mode_fan, :override_mode_heat, :override_mode_cool ]
 
   has_many :thermostat_histories
   has_many :thermostat_schedules
@@ -76,8 +76,8 @@ class Thermostat < ActiveRecord::Base
 
     # First, make sure the mode is set correctly in case we just switched modes.
     if on_override?
-      if self.mode.to_s != self.override_mode.to_s
-        self.update_column( mode: self.override_mode )
+      if self.mode.to_s != self.override_mode.to_s.gsub( 'override_mode_', '' )
+        self.update_column( mode: self.override_mode.to_s.gsub( 'override_mode_', '' ).to_sym )
       end
     else
       if self.active_schedule_rule.mode != self.mode
