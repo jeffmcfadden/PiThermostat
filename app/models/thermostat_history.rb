@@ -26,10 +26,10 @@ class ThermostatHistory < ActiveRecord::Base
 
     existing_data.push( this_record )
 
-    self.high_temperature = existing_data.max_by { |h| h[:ct] }[:ct]
-    self.low_temperature  = existing_data.min_by { |h| h[:ct] }[:ct]
-    self.mean_temperature = existing_data.collect{ |h| h[:ct] }.sum.to_f / existing_data.size.to_f
-    self.runtime          = existing_data.collect{ |h| h[:r ] }.sum
+    self.high_temperature = existing_data.max_by { |h| h[:ct] }[:ct] rescue self.thermostat.current_temperature
+    self.low_temperature  = existing_data.min_by { |h| h[:ct] }[:ct] rescue self.thermostat.current_temperature
+    self.mean_temperature = existing_data.collect{ |h| h[:ct] }.sum.to_f / existing_data.size.to_f rescue self.thermostat.current_temperature
+    self.runtime          = existing_data.collect{ |h| h[:r ] }.sum rescue 0
 
     self.json_archive = existing_data.to_json
 

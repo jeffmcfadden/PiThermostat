@@ -42,6 +42,8 @@
 
     sudo apt-get install postgresql postgresql-contrib libpq-dev
 
+    # Install WiringPi: http://wiringpi.com/download-and-install/
+
     sudo -i -u postgres
     createuser -s -P rails
     exit
