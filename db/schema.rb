@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140422011427) do
+ActiveRecord::Schema.define(version: 20150214184211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20140422011427) do
     t.datetime "override_until"
     t.float    "override_target_temperature"
     t.float    "override_hysteresis"
+    t.integer  "override_mode"
   end
 
 end

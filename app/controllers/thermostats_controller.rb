@@ -22,17 +22,17 @@ class ThermostatsController < ApplicationController
   def im_hot
     @thermostat = Thermostat.find( params[:id] )
 
-    @thermostat.update_attributes( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature - 3.0, override_hysteresis: 1.0, override_mode: @thermostat.mode  )
+    @thermostat.update_attributes( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature - 3.0, override_hysteresis: 1.0, override_mode: "override_mode_#{@thermostat.mode}".to_sym  )
 
-    respond_with @thermostat
+    respond_with @thermostat, location: @thermostat
   end
 
   def im_cold
     @thermostat = Thermostat.find( params[:id] )
 
-    @thermostat.update_attributes( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature + 3.0, override_hysteresis: 1.0, override_mode: @thermostat.mode  )
+    @thermostat.update_attributes( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature + 3.0, override_hysteresis: 1.0, override_mode: "override_mode_#{@thermostat.mode}".to_sym  )
 
-    respond_with @thermostat
+    respond_with @thermostat, location: @thermostat
   end
 
   def log_current_data
@@ -52,7 +52,7 @@ class ThermostatsController < ApplicationController
   private
 
   def thermostat_params
-    params.require( :thermostat ).permit( :name, :current_temperature, :target_temperature, :mode, :running, :hysteresis, :override_until, :override_target_temperature, :override_hysteresis )
+    params.require( :thermostat ).permit( :name, :current_temperature, :target_temperature, :mode, :running, :hysteresis, :override_until, :override_target_temperature, :override_hysteresis, :override_mode )
   end
 
   def load_thermostat

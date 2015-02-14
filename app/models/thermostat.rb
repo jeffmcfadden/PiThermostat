@@ -75,15 +75,21 @@ class Thermostat < ActiveRecord::Base
   def perform_thermostat_logic!
 
     # First, make sure the mode is set correctly in case we just switched modes.
-    # if on_override?
-    #   if self.mode.to_s != self.override_mode.to_s.gsub( 'override_mode_', '' )
-    #     self.update_column( :mode, self.override_mode.to_s.gsub( 'override_mode_', '' ).to_sym )
-    #   end
-    # else
-    #   if self.active_schedule_rule.mode != self.mode
-    #     self.update_column( :mode, self.active_schedule_rule.mode )
-    #   end
-    # end
+    if on_override?
+      if self.mode.to_s != self.override_mode.to_s.gsub( 'override_mode_', '' )
+        mode_value = Thermostat.modes[self.override_mode.to_s.gsub( 'override_mode_', '' ).to_sym]
+        self.update_column( :mode, mode_value )
+
+        _turn_all_off # Turn everything off since we'll be toggling modes here.
+      end
+    else
+      if self.active_schedule_rule.mode != self.mode
+        mode_value = Thermostat.modes[self.active_schedule_rule.mode]
+        self.update_column( :mode, mode_value )
+
+        _turn_all_off # Turn everything off since we'll be toggling modes here.
+      end
+    end
 
     if cool?
       if self.current_temperature >= self.target_temperature + self.hysteresis
@@ -119,7 +125,7 @@ class Thermostat < ActiveRecord::Base
   private
 
   def _turn_all_off
-    _turn_off_off
+    _turn_cool_off
     _turn_heat_off
     _turn_fan_off
   end

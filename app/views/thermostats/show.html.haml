@@ -1,23 +1,6 @@
 .row
   .col-md-12
-
-    .row
-      .col-xs-1
-        %ul.nav.nav-pills.nav-stacked
-          %li.active
-            %a
-              %i.fa.fa-home
-          %li
-            %a
-              %i.fa.fa-calendar
-          %li
-            %a
-              %i.fa.fa-gears
-      .col-xs-11
-        Here be stuff.
-
-
-%h1= @thermostat.name
+    %h1= @thermostat.name
 
 .row
   .col-md-12
@@ -48,6 +31,7 @@
         %dd
           = @thermostat.on_override?
           - if @thermostat.on_override?
+            = @thermostat.override_mode
             = @thermostat.override_target_temperature
             °F
             = "until #{@thermostat.override_until}"
@@ -60,15 +44,34 @@
         .form-group
           .col-sm-3
             = select_tag "override_value", options_for_select( (0..48).each.collect{ |n| ["#{n} hours", n] } ), class: "form-control"
-          .col-sm-3
+          .col-sm-2
             = f.text_field :override_target_temperature, class: "form-control"
-          .col-sm-3
+          .col-sm-2
             = f.text_field :override_hysteresis, class: "form-control"
-          .col-sm-3
+          .col-sm-2
+            = f.select :override_mode, options_for_select( Thermostat.override_modes.keys.collect{ |m| [m.gsub( 'override_mode_', '' ).titleize, m]}, @thermostat.override_mode ), class: "form-control"
+          .col-sm-2
             %button.btn.form-control.btn-primary{ type: :submit }
               Override
 
         %br
+
+.row
+  .col-md-3
+    = form_for @thermostat, url: im_cold_thermostat_path( @thermostat ), method: :post, class: "form-horizontal" do |f|
+      .well
+        .form-group
+          %button.btn.form-control.btn-primary{ type: :submit }
+            I'm Cold
+
+  .col-md-3
+    = form_for @thermostat, url: im_hot_thermostat_path( @thermostat ), method: :post, class: "form-horizontal" do |f|
+      .well
+        .form-group
+          %button.btn.form-control.btn-primary{ type: :submit }
+            I'm Hot
+
+
 
 .row
   .col-md-12
