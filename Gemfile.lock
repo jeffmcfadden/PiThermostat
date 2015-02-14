@@ -41,9 +41,8 @@ GEM
     coffee-script-source (1.7.0)
     erubis (2.7.0)
     execjs (2.0.2)
-    figaro (0.7.0)
-      bundler (~> 1.0)
-      rails (>= 3, < 5)
+    figaro (1.1.0)
+      thor (~> 0.14)
     flot-rails (0.0.5)
       jquery-rails
     haml (4.0.5)
@@ -130,7 +129,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.1.1)
   chartkick
   coffee-rails (~> 4.0.0)
-  figaro
+  figaro (>= 1.1.0)
   flot-rails
   haml (~> 4.0.5)
   jbuilder (~> 2.0)

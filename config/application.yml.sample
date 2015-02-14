@@ -1,0 +1,11 @@
+THERMOSTAT_DEVICE: "28-00000202301d"
+
+DATABASE_USER: "therm_db_user"
+DATABASE_PASS: "therm_db_pass"
+
+HVAC_COOL_PIN: "0"
+HVAC_HEAT_PIN: "1"
+HVAC_FAN_PIN:  "2"
+
+HTTP_BASIC_AUTH_USER: "admin"
+HTTP_BASIC_AUTH_PASS: "use_a_secure_password"

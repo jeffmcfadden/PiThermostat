@@ -46,5 +46,5 @@ gem 'unicorn'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'figaro'
+gem 'figaro', '>= 1.1.0'
 gem 'chartkick'

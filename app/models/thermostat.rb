@@ -3,6 +3,7 @@
 
 class Thermostat < ActiveRecord::Base
   enum mode: [ :off, :fan, :heat, :cool ]
+  enum override_mode: [ :off, :fan, :heat, :cool ]
 
   has_many :thermostat_histories
   has_many :thermostat_schedules
@@ -72,6 +73,18 @@ class Thermostat < ActiveRecord::Base
   end
 
   def perform_thermostat_logic!
+
+    # First, make sure the mode is set correctly in case we just switched modes.
+    if on_override?
+      if self.mode.to_s != self.override_mode.to_s
+        self.update_column( mode: self.override_mode )
+      end
+    else
+      if self.active_schedule_rule.mode != self.mode
+        self.update_column( mode: self.active_schedule_rule.mode )
+      end
+    end
+
     if cool?
       if self.current_temperature >= self.target_temperature + self.hysteresis
         _turn_cool_on
@@ -92,7 +105,9 @@ class Thermostat < ActiveRecord::Base
         # Do nothing, we're in the null zone.
       end
     elsif fan?
-      # Do nothign right now
+      _turn_cool_off
+      _turn_heat_off
+      _turn_fan_on
     end
 
   end
@@ -103,11 +118,17 @@ class Thermostat < ActiveRecord::Base
 
   private
 
+  def _turn_all_off
+    _turn_off_off
+    _turn_heat_off
+    _turn_fan_off
+  end
+
   def _turn_cool_on
     if Rails.env == 'production'
-      system "gpio write 0 0"
+      system "gpio write #{ENV['HVAC_COOL_PIN']} 0"
     else
-      puts "We're in development or we would be doing: gpio write 0 0"
+      puts "We're in development or we would be doing: gpio write #{ENV['HVAC_COOL_PIN']} 0"
     end
 
     self.update_column( :running, true )
@@ -115,9 +136,9 @@ class Thermostat < ActiveRecord::Base
 
   def _turn_cool_off
     if Rails.env == 'production'
-      system "gpio write 0 1"
+      system "gpio write #{ENV['HVAC_COOL_PIN']} 1"
     else
-      puts "We're in development or we would be doing: gpio write 0 1"
+      puts "We're in development or we would be doing: gpio write #{ENV['HVAC_COOL_PIN']} 1"
     end
 
     self.update_column( :running, false )
@@ -125,9 +146,9 @@ class Thermostat < ActiveRecord::Base
 
   def _turn_heat_on
     if Rails.env == 'production'
-      system "gpio write 1 0"
+      system "gpio write #{ENV['HVAC_HEAT_PIN']} 0"
     else
-      puts "We're in development or we would be doing: gpio write 1 0"
+      puts "We're in development or we would be doing: gpio write #{ENV['HVAC_HEAT_PIN']} 0"
     end
 
     self.update_column( :running, true )
@@ -135,7 +156,27 @@ class Thermostat < ActiveRecord::Base
 
   def _turn_heat_off
     if Rails.env == 'production'
-      system "gpio write 1 1"
+      system "gpio write #{ENV['HVAC_HEAT_PIN']} 1"
+    else
+      puts "We're in development or we would be doing: gpio write #{ENV['HVAC_HEAT_PIN']} 1"
+    end
+
+    self.update_column( :running, false )
+  end
+
+  def _turn_fan_on
+    if Rails.env == 'production'
+      system "gpio write #{ENV['HVAC_FAN_PIN']} 0"
+    else
+      puts "We're in development or we would be doing: gpio write #{ENV['HVAC_FAN_PIN']} 0"
+    end
+
+    self.update_column( :running, false )
+  end
+
+  def _turn_fan_off
+    if Rails.env == 'production'
+      system "gpio write #{ENV['HVAC_FAN_PIN']} 1"
     else
       puts "We're in development or we would be doing: gpio write 1 1"
     end
