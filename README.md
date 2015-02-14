@@ -75,8 +75,21 @@
     # this should work now:
     rails c production
 
+    # Setup your thermostat on the console.
+
     # setup your application.yml
 
     RAILS_ENV=production bundle exec rake assets:precompile
 
+    # If you want to run everything now:
     bundle exec unicorn_rails -c config/unicorn.rb -E production -D
+
+    # Upstart
+
+    sudo apt-get install upstart # Yes, it's okay, even given the warning.
+
+    # Copy the unicorn.conf file to /etc/init
+    # Copy the setup_1_wire_bus.conf file to /etc/init
+
+    # Reboot for Upstart to take effect.
+    sudo shutdown -r now
