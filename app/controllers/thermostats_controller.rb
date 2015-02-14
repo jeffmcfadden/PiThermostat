@@ -22,7 +22,7 @@ class ThermostatsController < ApplicationController
   def im_hot
     @thermostat = Thermostat.find( params[:id] )
 
-    @thermostat.update_attributes( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature - 3.0, override_hysteresis: 1.0  )
+    @thermostat.update_attributes( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature - 3.0, override_hysteresis: 1.0, override_mode: @thermostat.mode  )
 
     respond_with @thermostat
   end
@@ -30,7 +30,7 @@ class ThermostatsController < ApplicationController
   def im_cold
     @thermostat = Thermostat.find( params[:id] )
 
-    @thermostat.update_attributes( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature + 3.0, override_hysteresis: 1.0  )
+    @thermostat.update_attributes( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature + 3.0, override_hysteresis: 1.0, override_mode: @thermostat.mode  )
 
     respond_with @thermostat
   end
