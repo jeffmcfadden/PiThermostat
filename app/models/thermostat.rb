@@ -77,11 +77,11 @@ class Thermostat < ActiveRecord::Base
     # First, make sure the mode is set correctly in case we just switched modes.
     if on_override?
       if self.mode.to_s != self.override_mode.to_s.gsub( 'override_mode_', '' )
-        self.update_column( mode: self.override_mode.to_s.gsub( 'override_mode_', '' ).to_sym )
+        self.update_column( :mode, self.override_mode.to_s.gsub( 'override_mode_', '' ).to_sym )
       end
     else
       if self.active_schedule_rule.mode != self.mode
-        self.update_column( mode: self.active_schedule_rule.mode )
+        self.update_column( :mode, self.active_schedule_rule.mode )
       end
     end
 
