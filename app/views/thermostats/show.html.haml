@@ -49,7 +49,7 @@
           .col-sm-2
             = f.text_field :override_hysteresis, class: "form-control"
           .col-sm-2
-            = f.select :override_mode, options_for_select( Thermostat.override_modes.keys.collect{ |m| [m.gsub( 'override_mode_', '' ).titleize, m]}, @thermostat.override_mode ), class: "form-control"
+            = f.select :override_mode, options_for_select( Thermostat.override_modes.keys.collect{ |m| [m.gsub( 'override_mode_', '' ).titleize, m]}, @thermostat.override_mode ), {}, class: "form-control"
           .col-sm-2
             %button.btn.form-control.btn-primary{ type: :submit }
               Override
