@@ -20,6 +20,9 @@
               = @thermostat.override_target_temperature
               °F / #{@thermostat.override_hysteresis}
               = "for #{distance_of_time_in_words( @thermostat.override_until, Time.now)}"
+          - else
+            .small
+              Mode: #{@thermostat.mode.titleize}
 
 
       .row{ style: "margin-top: 4em;" }
