@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Thermostat</title>
+  <title><%= content_for?(:title) ? content_for(:title) : "PiThermostat" %></title>
   <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
 
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
@@ -9,6 +9,10 @@
 
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
 
+  <link rel="apple-touch-icon" sizes="76x76"   href="<%= image_url( 'touch-icon-076.png' ) %>">
+  <link rel="apple-touch-icon" sizes="120x120" href="<%= image_url( 'touch-icon-120.png' ) %>">
+  <link rel="apple-touch-icon" sizes="152x152" href="<%= image_url( 'touch-icon-152.png' ) %>">
+  <link rel="apple-touch-icon" sizes="180x180" href="<%= image_url( 'touch-icon-180.png' ) %>">
 
   <%= csrf_meta_tags %>
 </head>
