@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.1'
+gem 'rails', '4.1.9'
 # Use postgresql as the database for Active Record
 gem 'pg'
-gem 'unicorn'
 
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'haml', '~> 4.0.5'

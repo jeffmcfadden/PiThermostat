@@ -73,7 +73,6 @@ class Thermostat < ActiveRecord::Base
 
   def perform_thermostat_logic!
     if cool?
-
       if self.current_temperature >= self.target_temperature + self.hysteresis
         _turn_cool_on
       elsif self.current_temperature <= self.target_temperature - self.hysteresis

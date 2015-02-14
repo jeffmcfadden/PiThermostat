@@ -1,7 +1,6 @@
 # README
 
-## Do these things:
-
+## Do these things after boot:
 
     sudo modprobe w1-gpio
     sudo modprobe w1-therm
@@ -44,12 +43,12 @@
     sudo apt-get install postgresql postgresql-contrib libpq-dev
 
     sudo -i -u postgres
-    createuser rails -s -P
+    createuser -s -P rails
     exit
 
     sudo vim /etc/postgresql/9.1/main/pg_hba.conf
 
-    # change all the 'peer' to 'md5'
+    # change all the 'peer' to 'md5' NOT THE LOCAL ONE, LEAVE TO TRUST OR EVERYTHING BREAKS
 
     sudo service postgresql restart
 
