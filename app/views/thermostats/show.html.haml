@@ -1,40 +1,40 @@
-.row
+.row{ style: "margin-top: 0.5em;" }
   .col-md-12
-    %h1= @thermostat.name
+    .jumbotron
+      .row
+        .col-md-12
+          .small
+            = @thermostat.name
 
-.row
-  .col-md-12
-    .well
-      %dl
-        %dt
-          Target Temperature:
-        %dd
-          = @thermostat.target_temperature.round(2)
-          °F
-        %dt
-          Current Temperature:
-        %dd
-          = @thermostat.current_temperature.round(2)
-          °F
-        %dt
-          Hysteresis:
-        %dd
-          = @thermostat.hysteresis
-          °F
-        %dt
-          Mode:
-        %dd
-          = @thermostat.mode
-
-        %dt
-          Override?
-        %dd
-          = @thermostat.on_override?
-          - if @thermostat.on_override?
-            = @thermostat.override_mode
-            = @thermostat.override_target_temperature
+          %h1
+            = @thermostat.current_temperature.round(2)
             °F
-            = "until #{@thermostat.override_until}"
+
+          .small
+            Target: #{@thermostat.target_temperature.round(2)} °F / #{@thermostat.hysteresis}
+
+          - if @thermostat.on_override?
+            .small
+              Override:
+              = @thermostat.override_mode.to_s.gsub( 'override_mode_', '' ).titleize
+              = @thermostat.override_target_temperature
+              °F / #{@thermostat.override_hysteresis}
+              = "for #{distance_of_time_in_words( @thermostat.override_until, Time.now)}"
+
+
+      .row{ style: "margin-top: 4em;" }
+        .col-md-2
+          = form_for @thermostat, url: im_cold_thermostat_path( @thermostat ), method: :post, class: "form-horizontal" do |f|
+            .form-group
+              %button.btn.form-control.btn-primary{ type: :submit }
+                I'm Cold
+
+        .col-md-2
+          = form_for @thermostat, url: im_hot_thermostat_path( @thermostat ), method: :post, class: "form-horizontal" do |f|
+            .form-group
+              %button.btn.form-control.btn-primary{ type: :submit }
+                I'm Hot
+
 
 
 .row
@@ -56,20 +56,6 @@
 
         %br
 
-.row
-  .col-md-3
-    = form_for @thermostat, url: im_cold_thermostat_path( @thermostat ), method: :post, class: "form-horizontal" do |f|
-      .well
-        .form-group
-          %button.btn.form-control.btn-primary{ type: :submit }
-            I'm Cold
-
-  .col-md-3
-    = form_for @thermostat, url: im_hot_thermostat_path( @thermostat ), method: :post, class: "form-horizontal" do |f|
-      .well
-        .form-group
-          %button.btn.form-control.btn-primary{ type: :submit }
-            I'm Hot
 
 
 
