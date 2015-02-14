@@ -85,5 +85,5 @@ production:
   database: thermostat_production
   #username: thermostat
   #password: <%= ENV['THERMOSTAT_DATABASE_PASSWORD'] %>
-  username: rails
-  password: rails
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASS'] %>
