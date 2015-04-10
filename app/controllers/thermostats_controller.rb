@@ -19,6 +19,12 @@ class ThermostatsController < ApplicationController
     respond_with @thermostat
   end
 
+  def show
+    @thermostat = Thermostat.find( params[:id] )
+
+    respond_with @thermostat
+  end
+
   def im_hot
     @thermostat = Thermostat.find( params[:id] )
 
