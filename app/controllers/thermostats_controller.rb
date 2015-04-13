@@ -42,7 +42,17 @@ class ThermostatsController < ApplicationController
 
     @thermostat.update_attributes( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature - 3.0, override_hysteresis: 1.0, override_mode: "override_mode_#{@thermostat.mode}".to_sym  )
 
-    respond_with @thermostat, location: @thermostat
+    # Sheesh how slow is this going to be:
+    @thermostat_for_json = JSON.parse( @thermostat.to_json )
+
+    @thermostat_for_json[:target_temperature] = @thermostat.target_temperature
+    @thermostat_for_json[:hysteresis]         = @thermostat.hysteresis
+    @thermostat_for_json[:on_override]        = @thermostat.on_override?
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => @thermostat_for_json }
+    end
   end
 
   def im_cold
@@ -50,7 +60,17 @@ class ThermostatsController < ApplicationController
 
     @thermostat.update_attributes( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature + 3.0, override_hysteresis: 1.0, override_mode: "override_mode_#{@thermostat.mode}".to_sym  )
 
-    respond_with @thermostat, location: @thermostat
+    # Sheesh how slow is this going to be:
+    @thermostat_for_json = JSON.parse( @thermostat.to_json )
+
+    @thermostat_for_json[:target_temperature] = @thermostat.target_temperature
+    @thermostat_for_json[:hysteresis]         = @thermostat.hysteresis
+    @thermostat_for_json[:on_override]        = @thermostat.on_override?
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => @thermostat_for_json }
+    end
   end
 
   def log_current_data
