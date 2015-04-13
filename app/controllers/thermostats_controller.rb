@@ -33,7 +33,7 @@ class ThermostatsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render :xml => @thermostat_for_json }
+      format.json { render :json => @thermostat_for_json }
     end
   end
 
