@@ -1,6 +1,6 @@
 class ThermostatsController < ApplicationController
   respond_to :html, :json
-  
+
   http_basic_authenticate_with name: ENV['BASIC_AUTH_USERNAME'], password: ENV['BASIC_AUTH_PASSWORD'], except: [:update, :log_current_data]
 
   before_filter :load_thermostat
@@ -24,7 +24,17 @@ class ThermostatsController < ApplicationController
   def show
     @thermostat = Thermostat.find( params[:id] )
 
-    respond_with @thermostat
+    # Sheesh how slow is this going to be:
+    @thermostat_for_json = JSON.parse( @thermostat.to_json )
+
+    @thermostat_for_json[:target_temperature] = @thermostat.target_temperature
+    @thermostat_for_json[:hysteresis]         = @thermostat.hysteresis
+    @thermostat_for_json[:on_override]        = @thermostat.on_override?
+
+    respond_to do |format|
+      format.html
+      format.json { render :xml => @thermostat_for_json }
+    end
   end
 
   def im_hot
