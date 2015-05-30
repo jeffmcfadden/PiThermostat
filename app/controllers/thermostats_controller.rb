@@ -50,7 +50,7 @@ class ThermostatsController < ApplicationController
     @thermostat_for_json[:on_override]        = @thermostat.on_override?
 
     respond_to do |format|
-      format.html
+      format.html { redirect_to @thermostat }
       format.json { render :json => @thermostat_for_json }
     end
   end
@@ -68,7 +68,7 @@ class ThermostatsController < ApplicationController
     @thermostat_for_json[:on_override]        = @thermostat.on_override?
 
     respond_to do |format|
-      format.html
+      format.html { redirect_to @thermostat }
       format.json { render :json => @thermostat_for_json }
     end
   end
