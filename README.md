@@ -1,4 +1,14 @@
-# README
+README
+======
+
+## Equipment ##
+
+*  Raspberry Pi (v2): http://amzn.to/1IvY1WU
+*  Case: http://amzn.to/1IbG2Ic
+*  Power Adapter: http://amzn.to/1IbG3Mw
+*  SD Card: http://amzn.to/1JXDUlF
+*  Relay Board: http://amzn.to/1M3HMaE
+
 
 ## Do these things after boot:
 
