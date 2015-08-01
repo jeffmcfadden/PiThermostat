@@ -1,5 +1,6 @@
 README
 ======
+The software to use a RaspberryPi as a Thermostat for just about any HVAC unit or component. Works great for window A/C units and space heaters as well as Central HVAC Units. If you can get access to the power or control wires for your device, you can probably wire it up.
 
 ## Equipment ##
 
