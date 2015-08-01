@@ -9,6 +9,7 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
 *  Power Adapter: http://amzn.to/1IbG3Mw
 *  SD Card: http://amzn.to/1JXDUlF
 *  Relay Board: http://amzn.to/1M3HMaE
+*  Temperature Sensors: http://amzn.to/1JDZhg1 (Any DS18B20 sensor will work)
 
 
 ## Do these things after boot:
