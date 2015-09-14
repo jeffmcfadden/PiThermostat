@@ -13,7 +13,7 @@ class ThermostatsController < ApplicationController
     @thermostat = Thermostat.find( params[:id] )
 
     if params[:override_value].present?
-      params[:thermostat][:override_until] = params[:override_value].to_i.hours.from_now
+      params[:thermostat][:override_until] = params[:override_value].to_f.hours.from_now
     end
 
     @thermostat.update_attributes( thermostat_params )
