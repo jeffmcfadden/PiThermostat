@@ -36,6 +36,10 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
 
     sudo kill -HUP `cat /www/thermostat/pids/unicorn.pid`
 
+    OR
+
+    sudo restart unicorn # If you're using upstart
+
 
 ## Setting up the Pi:
 
@@ -60,7 +64,7 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
     createuser -s -P rails
     exit
 
-    sudo vim /etc/postgresql/9.1/main/pg_hba.conf
+    sudo vim /etc/postgresql/9.4/main/pg_hba.conf
 
     # change all the 'peer' to 'md5' NOT THE LOCAL ONE, LEAVE TO TRUST OR EVERYTHING BREAKS
 
@@ -85,6 +89,7 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
     # install the crontab
 
     sudo nginx
+    # After this I had to remove 'default' from /etc/init/nginx/sites-enabled
 
     # this should work now:
     rails c production
@@ -94,6 +99,15 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
     # setup your application.yml
 
     RAILS_ENV=production bundle exec rake assets:precompile
+
+    mkdir /www/thermostat/pids/
+
+    # RPi 2 (or any kernel 3.18.8 and higer)
+    # You have to edit your /boot/config.txt file and add this at the bottom:
+    # dtoverlay=w1-gpio
+
+    # reboot
+    sudo shutdown -r now
 
     # If you want to run everything now:
     bundle exec unicorn_rails -c config/unicorn.rb -E production -D
