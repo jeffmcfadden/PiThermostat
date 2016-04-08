@@ -94,7 +94,21 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
     # this should work now:
     rails c production
 
-    # Setup your thermostat on the console.
+    # Setup your thermostat on the console:
+    
+    $ cd /www/thermostat/
+    $ rails c production
+
+    > t = Thermostat.new
+    > t.name = "House"
+    > t.current_temperature = 80
+    > t.mode = 'cool'
+    > t.save
+    > ts = ThermostatSchedule.new
+    > ts.thermostat = t
+    > ts.active = true
+    > ts.save
+    > exit
 
     # setup your application.yml
 
