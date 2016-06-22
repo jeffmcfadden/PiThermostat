@@ -9,6 +9,13 @@ class Thermostat < ActiveRecord::Base
   has_many :thermostat_schedules
 
   after_save :perform_thermostat_logic!
+  
+  validates_inclusion_of :id, in: [1] # Only allow one Thermostat
+  
+  def self.new(attrs = {})
+    # Always set the ID to 1
+    super(attrs.merge(id: 1))
+  end
 
   def target_temperature
     if self.on_override?
