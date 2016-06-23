@@ -17,6 +17,10 @@ class Thermostat < ActiveRecord::Base
     super(attrs.merge(id: 1))
   end
 
+  def self.thermostat
+    @thermostat ||= Thermostat.first
+  end
+
   def target_temperature
     if self.on_override?
       tt = self.override_target_temperature
@@ -80,7 +84,8 @@ class Thermostat < ActiveRecord::Base
   end
 
   def perform_thermostat_logic!
-
+    return unless current_temperature
+    
     # First, make sure the mode is set correctly in case we just switched modes.
     if on_override?
       if self.mode.to_s != self.override_mode.to_s.gsub( 'override_mode_', '' )

@@ -6,7 +6,12 @@ class ThermostatsController < ApplicationController
   before_filter :load_thermostat
 
   def new
-    respond_with @thermostat
+    @thermostat = Thermostat.new
+  end
+  
+  def create
+    @thermostat = Thermostat.create(thermostat_params)
+    redirect_to root_path
   end
 
   def update
@@ -94,7 +99,7 @@ class ThermostatsController < ApplicationController
   end
 
   def load_thermostat
-    @thermostat = Thermostat.find( params[:id] )
+    @thermostat = Thermostat.thermostat
   end
 
 
