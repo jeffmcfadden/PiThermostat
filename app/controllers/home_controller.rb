@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   http_basic_authenticate_with name: ENV['BASIC_AUTH_USERNAME'], password: ENV['BASIC_AUTH_PASSWORD'], except: []
 
   def index
+    redirect_to new_thermostat_path and return unless Thermostat.thermostat
 
     @thermostats = Thermostat.all
 
