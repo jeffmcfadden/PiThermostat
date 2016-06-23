@@ -18,7 +18,7 @@ class Thermostat < ActiveRecord::Base
   end
 
   def self.thermostat
-    @thermostat ||= Thermostat.first
+    Thermostat.first
   end
 
   def target_temperature

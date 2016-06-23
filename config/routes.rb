@@ -13,5 +13,5 @@ Rails.application.routes.draw do
   end
   
     
-  root 'home#index'
+  root 'thermostats#show'
 end
