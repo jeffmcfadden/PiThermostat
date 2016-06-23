@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150214184211) do
+ActiveRecord::Schema.define(version: 20160623151122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,18 +38,18 @@ ActiveRecord::Schema.define(version: 20150214184211) do
 
   create_table "thermostat_schedule_rules", force: true do |t|
     t.integer  "thermostat_schedule_id"
-    t.boolean  "sunday"
-    t.boolean  "monday"
-    t.boolean  "tuesday"
-    t.boolean  "wednesday"
-    t.boolean  "thursday"
-    t.boolean  "friday"
-    t.boolean  "saturday"
+    t.boolean  "sunday",                 default: false
+    t.boolean  "monday",                 default: false
+    t.boolean  "tuesday",                default: false
+    t.boolean  "wednesday",              default: false
+    t.boolean  "thursday",               default: false
+    t.boolean  "friday",                 default: false
+    t.boolean  "saturday",               default: false
     t.integer  "hour"
     t.integer  "minute"
     t.float    "target_temperature"
     t.float    "hysteresis"
-    t.string   "mode"
+    t.string   "mode",                   default: "off"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(version: 20150214184211) do
 
   create_table "thermostat_schedules", force: true do |t|
     t.string   "name"
-    t.integer  "thermostat_id"
-    t.boolean  "active"
+    t.integer  "thermostat_id", default: 1
+    t.boolean  "active",        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -69,14 +69,14 @@ ActiveRecord::Schema.define(version: 20150214184211) do
   create_table "thermostats", force: true do |t|
     t.string   "name"
     t.float    "current_temperature"
-    t.integer  "mode"
-    t.boolean  "running"
+    t.integer  "mode",                        default: 0
+    t.boolean  "running",                     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "override_until"
     t.float    "override_target_temperature"
     t.float    "override_hysteresis"
-    t.integer  "override_mode"
+    t.integer  "override_mode",               default: 0
   end
 
 end
