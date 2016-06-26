@@ -1,0 +1,7 @@
+- content_for :title do
+  Thermostat Settings
+
+.row{ style: "margin-top: 0.5em;" }
+  .col-md-6.col-md-offset-3
+    %h1 Thermostat Settings
+    = render partial: "form", locals: { thermostat: @thermostat }

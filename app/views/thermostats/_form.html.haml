@@ -4,6 +4,35 @@
     .col-sm-10
       = f.text_field :name, class: "form-control ", placeholder: "House, Guest House, Garage, etc."
       %small <em>This is just a friendly name to help you.</em>
+      
+  .form-group
+    = f.label "Temperature Sensor ID", class: "control-label col-sm-2"
+    .col-sm-10
+      = f.text_field :temperature_sensor_id, class: "form-control ", placeholder: "28-0000023100d5"
+      %small <em>Ex: 28-0000023100d5</em>
+
+  .form-group
+    = f.label "GPIO Pins", class: "control-label col-sm-2"
+    .col-sm-3
+      = f.text_field :gpio_cool_pin, class: "form-control ", placeholder: "0"
+      %small Cool
+
+    .col-sm-3
+      = f.text_field :gpio_heat_pin, class: "form-control ", placeholder: "1"
+      %small Heat
+
+    .col-sm-3
+      = f.text_field :gpio_fan_pin, class: "form-control ", placeholder: "2"
+      %small Fan
+      
+  .form-group
+    = f.label "Security", class: "control-label col-sm-2"
+    .col-sm-5
+      = f.text_field :username, class: "form-control ", placeholder: "admin"
+      %small <em>Ex: admin</em>
+    .col-sm-5
+      = f.text_field :password, class: "form-control ", placeholder: "password", value: nil
+      %small Leave blank to not change
 
   .form-group
     .col-sm-12

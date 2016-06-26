@@ -1,7 +1,7 @@
 class ThermostatsController < ApplicationController
   respond_to :html, :json
 
-  http_basic_authenticate_with name: ENV['BASIC_AUTH_USERNAME'], password: ENV['BASIC_AUTH_PASSWORD'], except: [:update, :log_current_data]
+  before_action :ensure_authentication, except: [:update_current_temperature, :log_current_data]
 
   before_filter :load_thermostat, except: [:new, :create]
 
@@ -13,6 +13,9 @@ class ThermostatsController < ApplicationController
     @thermostat = Thermostat.create(thermostat_params) unless Thermostat.thermostat.present?
     redirect_to root_path
   end
+  
+  def edit
+  end
 
   def update
     if params[:override_value].present?
@@ -20,8 +23,12 @@ class ThermostatsController < ApplicationController
     end
 
     @thermostat.update_attributes( thermostat_params )
+    
+    if params[:thermostat][:password].present? && params[:thermostat][:username].present?
+      @thermostat.update_attributes(username: params[:thermostat][:username], password: params[:thermostat][:password])
+    end
 
-    respond_with @thermostat
+    redirect_to root_path
   end
 
   def show
@@ -91,7 +98,22 @@ class ThermostatsController < ApplicationController
   private
 
   def thermostat_params
-    params.require( :thermostat ).permit( :name, :current_temperature, :target_temperature, :mode, :running, :hysteresis, :override_until, :override_target_temperature, :override_hysteresis, :override_mode )
+    params.require( :thermostat ).permit(
+      :name,
+      :current_temperature,
+      :target_temperature,
+      :mode,
+      :running,
+      :hysteresis,
+      :override_until,
+      :override_target_temperature,
+      :override_hysteresis,
+      :override_mode,
+      :temperature_sensor_id,
+      :gpio_cool_pin,
+      :gpio_heat_pin,
+      :gpio_fan_pin
+    )
   end
 
   def load_thermostat

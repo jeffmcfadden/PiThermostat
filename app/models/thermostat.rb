@@ -7,6 +7,8 @@ class Thermostat < ActiveRecord::Base
 
   has_many :thermostat_histories
   has_many :thermostat_schedules
+  
+  has_secure_password
 
   after_save :perform_thermostat_logic!
   
