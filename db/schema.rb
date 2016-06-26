@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623151122) do
+ActiveRecord::Schema.define(version: 20160626214140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,12 @@ ActiveRecord::Schema.define(version: 20160623151122) do
     t.float    "override_target_temperature"
     t.float    "override_hysteresis"
     t.integer  "override_mode",               default: 0
+    t.string   "temperature_sensor_id"
+    t.integer  "gpio_cool_pin"
+    t.integer  "gpio_heat_pin"
+    t.integer  "gpio_fan_pin"
+    t.string   "username"
+    t.string   "password_digest"
   end
 
 end
