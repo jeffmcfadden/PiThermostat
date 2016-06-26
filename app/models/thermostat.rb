@@ -20,6 +20,19 @@ class Thermostat < ActiveRecord::Base
   def self.thermostat
     Thermostat.first
   end
+  
+  def update_current_temperature!
+    if Rails.env.producton?
+      s = `cat /sys/bus/w1/devices/#{ENV['THERMOSTAT_DEVICE']}/w1_slave`
+      cRaw = s.split( "\n" )[1].split( "t=" )[1].to_i
+      c = cRaw / 1000.0
+      f = (c * (9.0/5.0) ) + 32
+      
+      self.update_attribute(current_temperature: f)
+    else
+      puts "Skipping temperature update. Not in production mode."
+    end
+  end
 
   def target_temperature
     if self.on_override?

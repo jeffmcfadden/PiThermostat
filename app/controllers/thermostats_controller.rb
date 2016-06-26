@@ -83,6 +83,10 @@ class ThermostatsController < ApplicationController
 
     respond_with [@thermostat, @history]
   end
+  
+  def update_current_temperature
+    head :ok if @thermostat.update_current_temperature!
+  end
 
   private
 
