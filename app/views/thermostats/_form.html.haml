@@ -8,8 +8,7 @@
   .form-group
     = f.label "Temperature Sensor ID", class: "control-label col-sm-2"
     .col-sm-10
-      = f.text_field :temperature_sensor_id, class: "form-control ", placeholder: "28-0000023100d5"
-      %small <em>Ex: 28-0000023100d5</em>
+      = f.input :temperature_sensor_id, collection: temperature_sensor_ids_from_system, as: :select, label: false, class: "form-control", include_blank: false
 
   .form-group
     .col-sm-2
