@@ -9,6 +9,7 @@
           %i.fa.fa-gear
       .row
         .col-md-9
+          = render partial: "migration"
           .small
             = @thermostat.name
           - if @thermostat.current_temperature

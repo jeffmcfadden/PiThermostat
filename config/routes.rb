@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  resource :thermostat, only: [:new, :create, :edit, :update]
+  resource :thermostat, only: [:new, :create, :edit, :update] do
+    member do
+      post :migrate_settings
+    end
+  end
 
   post '/im_hot'  => "thermostats#im_hot",  as: :im_hot
   post '/im_cold' => "thermostats#im_cold", as: :im_cold

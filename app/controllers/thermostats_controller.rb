@@ -94,6 +94,20 @@ class ThermostatsController < ApplicationController
   def update_current_temperature
     head :ok if @thermostat.update_current_temperature!
   end
+  
+  def migrate_settings
+    @thermostat.temperature_sensor_id = ENV['THERMOSTAT_DEVICE'] if ENV['THERMOSTAT_DEVICE']
+    @thermostat.gpio_cool_pin         = ENV['HVAC_COOL_PIN']     if ENV['HVAC_COOL_PIN']
+    @thermostat.gpio_heat_pin         = ENV['HVAC_HEAT_PIN']     if ENV['HVAC_HEAT_PIN']
+    @thermostat.gpio_fan_pin          = ENV['HVAC_FAN_PIN']      if ENV['HVAC_FAN_PIN']
+    if ENV['BASIC_AUTH_USERNAME'] && ENV['BASIC_AUTH_PASSWORD']
+      @thermostat.username = ENV['BASIC_AUTH_USERNAME']
+      @thermostat.password = ENV['BASIC_AUTH_PASSWORD']
+    end
+    @thermostat.save
+    
+    redirect_to root_path
+  end
 
   private
 
