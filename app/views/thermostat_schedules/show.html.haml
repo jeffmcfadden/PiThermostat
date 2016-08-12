@@ -7,7 +7,7 @@
 
 %h2 Rules
 
-= link_to "Add Rule", new_thermostat_thermostat_schedule_thermostat_schedule_rule_path( @thermostat, @thermostat_schedule )
+= link_to "Add Rule", new_thermostat_schedule_thermostat_schedule_rule_path(@thermostat_schedule )
 
 %table.table
   %tr
@@ -66,6 +66,6 @@
       %td
         = rule.mode
       %td
-        = link_to "Edit", edit_thermostat_thermostat_schedule_thermostat_schedule_rule_path( @thermostat, @thermostat_schedule, rule )
+        = link_to "Edit", edit_thermostat_schedule_thermostat_schedule_rule_path(@thermostat_schedule, rule )
 
 

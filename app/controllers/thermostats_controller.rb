@@ -8,12 +8,12 @@ class ThermostatsController < ApplicationController
   def new
     @thermostat = Thermostat.new
   end
-  
+
   def create
     @thermostat = Thermostat.create(thermostat_params) unless Thermostat.thermostat.present?
     redirect_to root_path
   end
-  
+
   def edit
   end
 
@@ -23,7 +23,7 @@ class ThermostatsController < ApplicationController
     end
 
     @thermostat.update_attributes( thermostat_params )
-    
+
     if params[:thermostat][:password].present? && params[:thermostat][:username].present?
       @thermostat.update_attributes(username: params[:thermostat][:username], password: params[:thermostat][:password])
     end
@@ -33,7 +33,7 @@ class ThermostatsController < ApplicationController
 
   def show
     redirect_to new_thermostat_path and return unless @thermostat
-    
+
     # Sheesh how slow is this going to be:
     @thermostat_for_json = JSON.parse( @thermostat.to_json )
 
@@ -58,7 +58,7 @@ class ThermostatsController < ApplicationController
     @thermostat_for_json[:on_override]        = @thermostat.on_override?
 
     respond_to do |format|
-      format.html { redirect_to @thermostat }
+      format.html { redirect_to root_path }
       format.json { render :json => @thermostat_for_json }
     end
   end
@@ -74,7 +74,7 @@ class ThermostatsController < ApplicationController
     @thermostat_for_json[:on_override]        = @thermostat.on_override?
 
     respond_to do |format|
-      format.html { redirect_to @thermostat }
+      format.html { redirect_to root_path }
       format.json { render :json => @thermostat_for_json }
     end
   end
@@ -87,14 +87,12 @@ class ThermostatsController < ApplicationController
     end
 
     @history.capture_current_data!
-
-    respond_with [@thermostat, @history]
   end
-  
+
   def update_current_temperature
     head :ok if @thermostat.update_current_temperature!
   end
-  
+
   def migrate_settings
     @thermostat.temperature_sensor_id = ENV['THERMOSTAT_DEVICE'] if ENV['THERMOSTAT_DEVICE']
     @thermostat.gpio_cool_pin         = ENV['HVAC_COOL_PIN']     if ENV['HVAC_COOL_PIN']
@@ -105,7 +103,7 @@ class ThermostatsController < ApplicationController
       @thermostat.password = ENV['BASIC_AUTH_PASSWORD']
     end
     @thermostat.save
-    
+
     redirect_to root_path
   end
 
