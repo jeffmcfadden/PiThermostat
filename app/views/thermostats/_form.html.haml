@@ -4,9 +4,9 @@
     .col-sm-10
       = f.text_field :name, class: "form-control ", placeholder: "House, Guest House, Garage, etc."
       %small <em>This is just a friendly name to help you.</em>
-  
+
   = render partial: "migration"
-      
+
   .form-group
     = f.label "Temperature Sensor ID", class: "control-label col-sm-2"
     .col-sm-10
@@ -16,9 +16,9 @@
     .col-sm-2
       = f.label "GPIO Pins", class: "control-label"
       %small
-        = link_to "Pinout", "http://wiringpi.com/pins/", target: "_blank"
+        = link_to "Pinout", "https://pinout.xyz", target: "_blank"
         %i.fa.fa-external-link
-    
+
     .col-sm-3
       = f.input :gpio_cool_pin, collection: 0..20, as: :select, label: false, class: "form-control", input_html: {style: "width: 100%"}
       %small Cool
@@ -30,14 +30,14 @@
     .col-sm-3
       = f.input :gpio_fan_pin, collection: 0..20, as: :select, label: false, class: "form-control", input_html: {style: "width: 100%"}
       %small Fan
-  
+
   .form-group
     .col-sm-10.col-sm-offset-2
       %small
         %em Note: For better or worse, we use the Wiring Pi Pinout. #{link_to "View pinout diagram", "http://wiringpi.com/pins/", target: "_blank"}
         %i.fa.fa-external-link
-        
-      
+
+
   .form-group
     = f.label "Security", class: "control-label col-sm-2"
     .col-sm-5

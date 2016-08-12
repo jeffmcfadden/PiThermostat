@@ -96,7 +96,7 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
 
     # Setup your thermostat on the console.
 
-    # setup your application.yml
+    # setup your application.yml - see config/application.yml.sample for a sample
 
     RAILS_ENV=production bundle exec rake assets:precompile
 
@@ -121,3 +121,5 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
 
     # Reboot for Upstart to take effect.
     sudo shutdown -r now
+
+    # Once Running, follow the web based setup process.
