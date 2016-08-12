@@ -40,7 +40,7 @@
         .col-md-3
           - if @thermostat.thermostat_histories.today.present?
             = render partial: "history", locals: { history: @thermostat.thermostat_histories.today.first }
-          
+
 
       .row{ style: "margin-top: 4em;" }
         .col-md-2
@@ -85,7 +85,7 @@
     %h2
     Active Schedule:
     - if @thermostat.active_schedule
-      = link_to @thermostat.active_schedule.name, thermostat_thermostat_schedule_path( @thermostat, @thermostat.active_schedule )
+      = link_to @thermostat.active_schedule.name, thermostat_schedule_path( @thermostat, @thermostat.active_schedule )
 
       %table.table
         - if @thermostat.active_schedule.present?
@@ -111,4 +111,3 @@
         = line_chart [{ name: "Temperature", data: @thermostat.thermostat_histories.today.first.data_for_chartkick}], library: { curveType: 'none', lineWidth: '0.5', pointSize: 0 }, min: @thermostat.thermostat_histories.today.first.low_temperature - 1, max: @thermostat.thermostat_histories.today.first.high_temperature + 1, height: '400px'
     - else
       %em No data found for today
-      
