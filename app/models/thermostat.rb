@@ -7,13 +7,13 @@ class Thermostat < ActiveRecord::Base
 
   has_many :thermostat_histories
   has_many :thermostat_schedules
-  
+
   has_secure_password
 
   after_save :perform_thermostat_logic!
-  
+
   validates_inclusion_of :id, in: [1] # Only allow one Thermostat
-  
+
   def self.new(attrs = {})
     # Always set the ID to 1
     super(attrs.merge(id: 1))
@@ -22,14 +22,14 @@ class Thermostat < ActiveRecord::Base
   def self.thermostat
     Thermostat.first
   end
-  
+
   def update_current_temperature!
-    if Rails.env.producton?
+    if Rails.env.production?
       s = `cat /sys/bus/w1/devices/#{temperature_sensor_id}/w1_slave`
       cRaw = s.split( "\n" )[1].split( "t=" )[1].to_i
       c = cRaw / 1000.0
       f = (c * (9.0/5.0) ) + 32
-      
+
       self.update_attribute(current_temperature: f)
     else
       puts "Skipping temperature update. Not in production mode."
@@ -100,7 +100,7 @@ class Thermostat < ActiveRecord::Base
 
   def perform_thermostat_logic!
     return unless current_temperature
-    
+
     # First, make sure the mode is set correctly in case we just switched modes.
     if on_override?
       if self.mode.to_s != self.override_mode.to_s.gsub( 'override_mode_', '' )
