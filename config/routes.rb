@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :thermostat_schedules do
     resources :thermostat_schedule_rules
   end
-  
-    
+
+  get 'thermostat' => 'thermostats#show', format: :json
   root 'thermostats#show'
 end
