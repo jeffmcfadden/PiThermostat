@@ -3,5 +3,8 @@
 
 .row{ style: "margin-top: 0.5em;" }
   .col-md-6.col-md-offset-3
+    = link_to root_path do
+      %i.fa.fa-arrow-left
+      Back
     %h1 Thermostat Settings
     = render partial: "form", locals: { thermostat: @thermostat }
