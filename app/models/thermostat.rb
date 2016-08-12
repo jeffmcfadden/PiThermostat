@@ -30,7 +30,7 @@ class Thermostat < ActiveRecord::Base
       c = cRaw / 1000.0
       f = (c * (9.0/5.0) ) + 32
 
-      self.update_attribute(current_temperature: f)
+      self.update_attributes(current_temperature: f)
     else
       puts "Skipping temperature update. Not in production mode."
     end

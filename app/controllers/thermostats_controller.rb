@@ -86,7 +86,7 @@ class ThermostatsController < ApplicationController
       @history = ThermostatHistory.create( { thermostat: @thermostat, year: Time.zone.now.year, day_of_year: Time.zone.now.yday } )
     end
 
-    @history.capture_current_data!
+    head :ok if @history.capture_current_data!
   end
 
   def update_current_temperature
