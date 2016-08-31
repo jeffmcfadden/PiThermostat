@@ -103,6 +103,11 @@
                 = rule.mode
     - else
       %em none
+      %br/
+      - if @thermostat.thermostat_schedules.exists?
+        = link_to "View Schedules".html_safe, thermostat_schedules_path, class: "btn btn-primary"
+      - else
+        = link_to "<i class='fa fa-plus'></i> Create Schedule".html_safe, thermostat_schedules_path, class: "btn btn-primary"
 
     %h2 Today's Temperature
 

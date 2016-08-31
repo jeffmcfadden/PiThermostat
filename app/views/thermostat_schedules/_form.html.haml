@@ -1,24 +1,10 @@
-= simple_form_for([thermostat, thermostat_schedule], html: {class: 'form-horizontal' }) do |f|
-  .form-group
-    = f.label :thermostat_id, class: "control-label col-sm-2"
-    .col-sm-10
-      %p.form-control-static
-        = thermostat.name
-      = f.hidden_field :thermostat_id
-
-
-
+= simple_form_for([thermostat_schedule], html: {class: 'form-horizontal' }) do |f|
   .form-group
     = f.label :name, class: "control-label col-sm-2"
     .col-sm-10
       = f.text_field :name, class: "form-control ", placeholder: "Default, Out of Town, etc."
 
   .form-group
-    = f.label :active, class: "control-label col-sm-2"
-    .col-sm-10
-      = f.check_box :active, class: "form-control "
-
-  .form-group
-    .col-sm-12
+    .col-sm-10.col-sm-offset-2
       %button.btn.btn-primary.form-control{ type: "submit" }
-        Save
+        = @thermostat_schedule.persisted? ? "Save" : "Create"

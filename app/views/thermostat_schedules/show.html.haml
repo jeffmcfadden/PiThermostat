@@ -1,71 +1,80 @@
-%h1
-  = @thermostat_schedule.name
-  %small
-    = "#{@thermostat_schedule.active? ? 'active' : 'inactive' }"
-    on
-    = link_to @thermostat_schedule.thermostat.name, @thermostat_schedule.thermostat
-
-%h2 Rules
-
-= link_to "Add Rule", new_thermostat_schedule_thermostat_schedule_rule_path(@thermostat_schedule )
-
-%table.table
-  %tr
-    %th
-      S
-    %th
-      M
-    %th
-      T
-    %th
-      W
-    %th
-      T
-    %th
-      F
-    %th
-      S
-    %th
-      Time
-    %th
-      Temperature
-    %th
-      Hysteresis
-    %th
-      Mode
-    %th
+.row
+  .col-md-12
+    %h1
+      = link_to @thermostat_schedule.name, edit_thermostat_schedule_path(@thermostat_schedule)
+      %small
+        = "#{@thermostat_schedule.active? ? 'active' : 'inactive' }"
+        on
+        = link_to @thermostat_schedule.thermostat.name, root_path
+    = link_to thermostat_schedules_path do
+      %i.fa.fa-arrow-left
+      Back
 
 
+.row
+  .col-md-12
+    .pull-right{style: "margin-top: 1em"}
+      = link_to "<i class='fa fa-plus'></i> Add Rule".html_safe, new_thermostat_schedule_thermostat_schedule_rule_path( @thermostat_schedule ), class: "btn btn-primary"
+    %h2 Rules
+.row
+  .col-md-12
+    %table.table
+      %tr
+        %th
+          S
+        %th
+          M
+        %th
+          T
+        %th
+          W
+        %th
+          T
+        %th
+          F
+        %th
+          S
+        %th
+          Time
+        %th
+          Temperature
+        %th
+          Hysteresis
+        %th
+          Mode
+        %th
 
 
 
-  - @thermostat_schedule.thermostat_schedule_rules.order( "sunday DESC, monday DESC, tuesday DESC, wednesday DESC, thursday DESC, friday DESC, saturday DESC, hour, minute" ).each do |rule|
-    %tr
-      %td
-        = render partial: "checkbox_if_true", locals: { value: rule.sunday? }
-      %td
-        = render partial: "checkbox_if_true", locals: { value: rule.monday? }
-      %td
-        = render partial: "checkbox_if_true", locals: { value: rule.tuesday? }
-      %td
-        = render partial: "checkbox_if_true", locals: { value: rule.wednesday? }
-      %td
-        = render partial: "checkbox_if_true", locals: { value: rule.thursday? }
-      %td
-        = render partial: "checkbox_if_true", locals: { value: rule.friday? }
-      %td
-        = render partial: "checkbox_if_true", locals: { value: rule.saturday? }
-      %td
-        = rule.hour
-        \:
-        = rule.minute
-      %td
-        = rule.target_temperature
-      %td
-        = rule.hysteresis
-      %td
-        = rule.mode
-      %td
-        = link_to "Edit", edit_thermostat_schedule_thermostat_schedule_rule_path(@thermostat_schedule, rule )
+
+
+      - @thermostat_schedule.thermostat_schedule_rules.order( "sunday DESC, monday DESC, tuesday DESC, wednesday DESC, thursday DESC, friday DESC, saturday DESC, hour, minute" ).each do |rule|
+        %tr
+          %td
+            = render partial: "checkbox_if_true", locals: { value: rule.sunday? }
+          %td
+            = render partial: "checkbox_if_true", locals: { value: rule.monday? }
+          %td
+            = render partial: "checkbox_if_true", locals: { value: rule.tuesday? }
+          %td
+            = render partial: "checkbox_if_true", locals: { value: rule.wednesday? }
+          %td
+            = render partial: "checkbox_if_true", locals: { value: rule.thursday? }
+          %td
+            = render partial: "checkbox_if_true", locals: { value: rule.friday? }
+          %td
+            = render partial: "checkbox_if_true", locals: { value: rule.saturday? }
+          %td
+            = rule.hour
+            \:
+            = rule.minute
+          %td
+            = rule.target_temperature
+          %td
+            = rule.hysteresis
+          %td
+            = rule.mode
+          %td
+            = link_to "Edit", edit_thermostat_schedule_thermostat_schedule_rule_path(@thermostat_schedule, rule )
 
 

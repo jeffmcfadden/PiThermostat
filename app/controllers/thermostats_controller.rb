@@ -127,10 +127,4 @@ class ThermostatsController < ApplicationController
       :gpio_fan_pin
     )
   end
-
-  def load_thermostat
-    @thermostat = Thermostat.thermostat
-  end
-
-
 end

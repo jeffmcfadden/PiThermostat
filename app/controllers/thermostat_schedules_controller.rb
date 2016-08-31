@@ -6,46 +6,45 @@ class ThermostatSchedulesController < ApplicationController
   before_filter :load_thermostat, :load_thermostat_schedule
 
   def index
-    @thermostat_schedules = ThermostatSchedule.all
-
-    respond_with @thermostat_schedules
+    @thermostat_schedules = ThermostatSchedule.order(:name)
+    @thermostat_schedule = @thermostat.thermostat_schedules.new
   end
 
   def show
-    respond_with @thermostat_schedule
   end
 
   def edit
-    respond_with @thermostat_schedule
   end
 
   def new
     @thermostat_schedule = @thermostat.thermostat_schedules.new
-
-    respond_with @thermostat_schedule
   end
 
   def create
     @thermostat_schedule = @thermostat.thermostat_schedules.create( thermostat_schedule_params )
-
-    respond_with [@thermostat, @thermostat_schedule]
+    redirect_to @thermostat_schedule
   end
 
   def update
-    @thermostat_schedule = @thermostat_schedule.update_attributes( thermostat_schedule_params )
+    @thermostat_schedule.update_attributes( thermostat_schedule_params )
+    redirect_to @thermostat_schedule
+  end
 
-    respond_with [@thermostat, @thermostat_schedule]
+  def destroy
+    @thermostat_schedule.destroy
+    redirect_to thermostat_schedules_path
+  end
+
+  def make_active
+    @thermostat_schedule.make_active!
+    redirect_to thermostat_schedules_path
   end
 
 
   private
 
   def thermostat_schedule_params
-    params.require( :thermostat_schedule ).permit( :thermostat_id, :name, :active )
-  end
-
-  def load_thermostat
-    @thermostat = Thermostat.find( params[:thermostat_id] )
+    params.require( :thermostat_schedule ).permit( :name )
   end
 
   def load_thermostat_schedule
