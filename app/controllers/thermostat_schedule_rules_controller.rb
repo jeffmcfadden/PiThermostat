@@ -2,7 +2,7 @@ class ThermostatScheduleRulesController < ApplicationController
 
   before_filter :load_thermostat, :load_thermostat_schedule, :load_thermostat_schedule_rule
 
-  http_basic_authenticate_with name: ENV['BASIC_AUTH_USERNAME'], password: ENV['BASIC_AUTH_PASSWORD'], except: []
+  before_action :ensure_authentication, except: []  
 
   def new
     @thermostat_schedule_rule = @thermostat_schedule.thermostat_schedule_rules.new

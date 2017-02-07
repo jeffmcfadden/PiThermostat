@@ -88,6 +88,8 @@
     Active Schedule:
     - if @thermostat.active_schedule
       = link_to @thermostat.active_schedule.name, thermostat_schedule_path( @thermostat.active_schedule )
+      |
+      = link_to "View All Schedules".html_safe, thermostat_schedules_path
 
       %table.table
         - if @thermostat.active_schedule.present?
