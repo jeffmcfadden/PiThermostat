@@ -65,9 +65,9 @@
           %td
             = render partial: "checkbox_if_true", locals: { value: rule.saturday? }
           %td
-            = rule.hour
+            = '%02i' % rule.hour
             \:
-            = rule.minute
+            = '%02i' % rule.minute
           %td
             = rule.target_temperature
           %td
