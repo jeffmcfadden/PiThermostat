@@ -18,7 +18,7 @@ class ThermostatHistory < ApplicationRecord
   def capture_current_data!
     existing_data = JSON.parse( self.json_archive, symbolize_names: true ) rescue []
 
-    this_record = { ts: Time.zone.now.strftime( "%s" ).to_i,
+    this_record = { ts: Time.now.to_i + Time.zone.utc_offset,
                     tt: self.thermostat.target_temperature,
                     ct: self.thermostat.current_temperature,
                     r: (self.thermostat.running? ? 1 : 0 ),

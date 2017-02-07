@@ -12,6 +12,6 @@ module PiThermostat
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     
-    Time.zone = 'US/Arizona'
+    Time.zone = 'America/Phoenix'
   end
 end
