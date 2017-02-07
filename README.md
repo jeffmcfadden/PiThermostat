@@ -110,7 +110,7 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
     > ts.save
     > exit
 
-    # setup your application.yml
+    # setup your application.yml - see config/application.yml.sample for a sample
 
     RAILS_ENV=production bundle exec rake assets:precompile
 
@@ -135,3 +135,17 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
 
     # Reboot for Upstart to take effect.
     sudo shutdown -r now
+
+    # Once Running, follow the web based setup process.
+
+## Upgrading
+
+Upgrading from a previous version may involve these steps:
+
+    cd /www/thermostat
+    git pull
+    RAILS_ENV=production bundle install
+    RAILS_ENV=production bundle exec rake db:migrate
+    sudo shutdown -r now
+
+Be sure to upgrade the homebridge plugin to the latest version as well

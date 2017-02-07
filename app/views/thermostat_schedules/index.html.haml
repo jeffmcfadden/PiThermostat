@@ -1,1 +1,33 @@
-= link_to "New Schedule", new_thermostat_thermostat_schedule_path( @thermostat )
+.row
+  .col-md-6
+    %h1 Thermostat Schedules
+    = link_to root_path do
+      %i.fa.fa-arrow-left
+      Back
+
+- if @thermostat_schedules.exists?
+  .row
+    .col-md-12
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Name
+            %th{style: "width: 120px"} Active
+            %th{style: "width: 120px"} Actions
+        %tbody
+          - @thermostat_schedules.each do |thermostat_schedule|
+            %tr
+              %td= link_to thermostat_schedule.name, thermostat_schedule
+              %td
+                - if thermostat_schedule.active?
+                  %i.fa.fa-check
+                - else
+                  %i.fa.fa-times
+              %td
+                - unless thermostat_schedule.active?
+                  = link_to "Make Active", make_active_thermostat_schedule_path(thermostat_schedule), class: "btn btn-default", method: :post
+
+
+
+
+= render partial: "new"

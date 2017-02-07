@@ -1,0 +1,7 @@
+.row{style: "margin-top: 2em"}
+  .col-md-6.col-md-offset-3.well
+    - if @thermostat_schedule.persisted?
+      .pull-right{style: "margin-top: 1em"}
+        = link_to "Delete", thermostat_schedule_path(@thermostat_schedule), method: :delete, data: { confirm: "Are you sure you want to delete this Schedule? This cannot be undone."}, class: "btn btn-danger"
+    %h2 Edit Thermostat Schedule Name
+    = render partial: "form", locals: { thermostat_schedule: @thermostat_schedule }

@@ -1,3 +1,9 @@
-%h1 Edit Schedule Rule
+.row
+  .col-md-12
+    .pull-right{style: "margin-top: 1em"}
+      = link_to "Delete", thermostat_schedule_thermostat_schedule_rule_path(@thermostat_schedule, @thermostat_schedule_rule), method: :delete, data: { confirm: "Are you sure you want to delete this Schedule Rule? This cannot be undone."}, class: "btn btn-danger"
+    %h1
+      Edit Schedule Rule
+      %small for #{link_to @thermostat_schedule.name, @thermostat_schedule}
 
 = render partial: "form", locals: { thermostat: @thermostat, thermostat_schedule: @thermostat_schedule, thermostat_schedule_rule: @thermostat_schedule_rule }

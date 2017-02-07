@@ -1,0 +1,16 @@
+- if needs_migration?
+  .alert.alert-danger
+    %p We've detected that you may need to migrate your configuration settings to work with this version of PiThermostat.
+    %p We have detected your old settings, and can apply them automatically.
+    %ul
+      %li <strong>Temperature Sensor ID:</strong> #{ENV['THERMOSTAT_DEVICE']}
+      %li <strong>GPIO Cool Pin:</strong> #{ENV['HVAC_COOL_PIN']}
+      %li <strong>GPIO Heat Pin:</strong> #{ENV['HVAC_HEAT_PIN']}
+      %li <strong>GPIO Fan Pin:</strong> #{ENV['HVAC_FAN_PIN']}
+      %li <strong>Username:</strong> #{ENV['BASIC_AUTH_USERNAME']}
+      %li <strong>Password:</strong> <em>-hidden-</em>
+    
+    %p You may set them manually on your #{link_to "Thermostat Settings <i class='fa fa-gear'></i>".html_safe, edit_thermostat_path} page.
+    .row  
+      .col-md-12
+        = link_to "Perform Migration", migrate_settings_thermostat_path, method: :post, class: "btn btn-primary pull-right"
