@@ -47,14 +47,13 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
 
     mkdir installs
     cd installs
-    sudo apt-get install git
-    git clone https://github.com/ruby/ruby.git
-    cd ruby
-    git checkout tags/v2_1_3
+    sudo apt-get install git wget
+    wget "https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.3.tar.gz"
+    cd ruby-2.3.3
     sudo apt-get install autoconf
     autoconf
     sudo apt-get install gcc g++ make ruby1.9.1 bison libyaml-dev libssl-dev libffi-dev zlib1g-dev libxslt-dev libxml2-dev libpq-dev zip nodejs vim libreadline-dev
-    ./configure && make clean && make && sudo make install
+    ./configure && make clean && make -j4 && sudo make install
 
     sudo apt-get install postgresql postgresql-contrib libpq-dev
 
@@ -94,22 +93,6 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
     # this should work now:
     rails c production
 
-    # Setup your thermostat on the console:
-    
-    $ cd /www/thermostat/
-    $ rails c production
-
-    > t = Thermostat.new
-    > t.name = "House"
-    > t.current_temperature = 80
-    > t.mode = 'cool'
-    > t.save
-    > ts = ThermostatSchedule.new
-    > ts.thermostat = t
-    > ts.active = true
-    > ts.save
-    > exit
-
     # setup your application.yml - see config/application.yml.sample for a sample
 
     RAILS_ENV=production bundle exec rake assets:precompile
@@ -136,7 +119,7 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
     # Reboot for Upstart to take effect.
     sudo shutdown -r now
 
-    # Once Running, follow the web based setup process.
+    # Once Running, follow the web based setup process by visiting http://[your raspberry pi]/
 
 ## Upgrading
 
