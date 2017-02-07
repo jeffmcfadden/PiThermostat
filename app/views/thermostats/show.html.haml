@@ -63,8 +63,8 @@
       .well
         .form-group
           .col-sm-3
-            - override_options = [["5 minutes", 0.083], ["10 minutes", 0.166], ["15 minutes", 0.25], ["30 minutes", 0.5]]
-            - override_options += ((0..48).each.collect{ |n| ["#{n} hours", n] })
+            - override_options = [["0 minutes", 0.0], ["5 minutes", 0.083], ["10 minutes", 0.166], ["15 minutes", 0.25], ["30 minutes", 0.5]]
+            - override_options += ((1..48).each.collect{ |n| ["#{n} hours", n] })
             = select_tag "override_value", options_for_select( override_options ), class: "form-control"
           .col-sm-2
             = f.text_field :override_target_temperature, class: "form-control"
