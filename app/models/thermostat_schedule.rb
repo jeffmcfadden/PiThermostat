@@ -1,4 +1,4 @@
-class ThermostatSchedule < ActiveRecord::Base
+class ThermostatSchedule < ApplicationRecord
   belongs_to :thermostat
   has_many :thermostat_schedule_rules, dependent: :destroy
 

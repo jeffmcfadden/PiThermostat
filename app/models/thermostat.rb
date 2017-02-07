@@ -1,7 +1,7 @@
 # You have to do this before you an get things to work:
 # $ gpio mode 0 out
 
-class Thermostat < ActiveRecord::Base
+class Thermostat < ApplicationRecord
   enum mode: [ :off, :fan, :heat, :cool ]
   enum override_mode: [ :override_mode_off, :override_mode_fan, :override_mode_heat, :override_mode_cool ]
 

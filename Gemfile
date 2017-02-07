@@ -1,7 +1,10 @@
 source 'https://rubygems.org'
 
+ruby '2.3.3'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.9'
+gem 'rails', '>= 5.0.1', '< 5.1'
+
 # Use postgresql as the database for Active Record
 gem 'pg'
 
@@ -9,16 +12,18 @@ gem 'bootstrap-sass', '~> 3.1.1'
 gem 'haml', '~> 4.0.5'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails'
 
 gem 'simple_form'
 
-gem "flot-rails"
+gem 'responders', '~> 2.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
+
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails'
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 

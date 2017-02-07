@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -16,7 +15,7 @@ ActiveRecord::Schema.define(version: 20160626214140) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "thermostat_histories", force: true do |t|
+  create_table "thermostat_histories", force: :cascade do |t|
     t.integer  "thermostat_id"
     t.integer  "year"
     t.integer  "day_of_year"
@@ -27,16 +26,15 @@ ActiveRecord::Schema.define(version: 20160626214140) do
     t.text     "json_archive"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["high_temperature"], name: "index_thermostat_histories_on_high_temperature", using: :btree
+    t.index ["low_temperature"], name: "index_thermostat_histories_on_low_temperature", using: :btree
+    t.index ["mean_temperature"], name: "index_thermostat_histories_on_mean_temperature", using: :btree
+    t.index ["runtime"], name: "index_thermostat_histories_on_runtime", using: :btree
+    t.index ["thermostat_id"], name: "index_thermostat_histories_on_thermostat_id", using: :btree
+    t.index ["year", "day_of_year"], name: "index_thermostat_histories_on_year_and_day_of_year", using: :btree
   end
 
-  add_index "thermostat_histories", ["high_temperature"], name: "index_thermostat_histories_on_high_temperature", using: :btree
-  add_index "thermostat_histories", ["low_temperature"], name: "index_thermostat_histories_on_low_temperature", using: :btree
-  add_index "thermostat_histories", ["mean_temperature"], name: "index_thermostat_histories_on_mean_temperature", using: :btree
-  add_index "thermostat_histories", ["runtime"], name: "index_thermostat_histories_on_runtime", using: :btree
-  add_index "thermostat_histories", ["thermostat_id"], name: "index_thermostat_histories_on_thermostat_id", using: :btree
-  add_index "thermostat_histories", ["year", "day_of_year"], name: "index_thermostat_histories_on_year_and_day_of_year", using: :btree
-
-  create_table "thermostat_schedule_rules", force: true do |t|
+  create_table "thermostat_schedule_rules", force: :cascade do |t|
     t.integer  "thermostat_schedule_id"
     t.boolean  "sunday",                 default: false
     t.boolean  "monday",                 default: false
@@ -52,21 +50,19 @@ ActiveRecord::Schema.define(version: 20160626214140) do
     t.string   "mode",                   default: "off"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["thermostat_schedule_id"], name: "index_thermostat_schedule_rules_on_thermostat_schedule_id", using: :btree
   end
 
-  add_index "thermostat_schedule_rules", ["thermostat_schedule_id"], name: "index_thermostat_schedule_rules_on_thermostat_schedule_id", using: :btree
-
-  create_table "thermostat_schedules", force: true do |t|
+  create_table "thermostat_schedules", force: :cascade do |t|
     t.string   "name"
     t.integer  "thermostat_id", default: 1
     t.boolean  "active",        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["thermostat_id"], name: "index_thermostat_schedules_on_thermostat_id", using: :btree
   end
 
-  add_index "thermostat_schedules", ["thermostat_id"], name: "index_thermostat_schedules_on_thermostat_id", using: :btree
-
-  create_table "thermostats", force: true do |t|
+  create_table "thermostats", force: :cascade do |t|
     t.string   "name"
     t.float    "current_temperature"
     t.integer  "mode",                        default: 0

@@ -124,7 +124,9 @@ class ThermostatsController < ApplicationController
       :temperature_sensor_id,
       :gpio_cool_pin,
       :gpio_heat_pin,
-      :gpio_fan_pin
+      :gpio_fan_pin,
+      :username,
+      :password
     )
   end
 end

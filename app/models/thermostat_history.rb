@@ -1,4 +1,4 @@
-class ThermostatHistory < ActiveRecord::Base
+class ThermostatHistory < ApplicationRecord
   belongs_to :thermostat
 
   scope :now_for_thermostat,  -> (thermostat) {

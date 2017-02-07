@@ -1,4 +1,4 @@
-class ThermostatScheduleRule < ActiveRecord::Base
+class ThermostatScheduleRule < ApplicationRecord
   belongs_to :thermostat_schedule
 
   scope :active_on_any_day, -> {

@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   respond_to :html, :json
 
   def ensure_authentication
-    if Thermostat.thermostat.username.present?
+    if Thermostat&.thermostat&.username.present?
       authenticate_or_request_with_http_basic('Thermostat') do |username, password|
         Thermostat.thermostat.username == username && Thermostat.thermostat.authenticate(password)
       end
