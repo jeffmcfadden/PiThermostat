@@ -109,9 +109,9 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
     # If you want to run everything now:
     bundle exec unicorn_rails -c config/unicorn.rb -E production -D
 
-    # Upstart
+    # Upstart - DONT DO THIS FOR NOW. WILL KILL YOUR PI
 
-    sudo apt-get install upstart # Yes, it's okay, even given the warning.
+    # sudo apt-get install upstart # Yes, it's okay, even given the warning. NOT ACTUALLY OK. DONT DO THIS
 
     # Copy the unicorn.conf file to /etc/init
     # Copy the setup_1_wire_bus.conf file to /etc/init
