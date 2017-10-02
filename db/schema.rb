@@ -62,7 +62,6 @@ ActiveRecord::Schema.define(version: 20171002183604) do
     t.boolean "stir_air", default: false
     t.integer "stir_air_minutes", default: 5
     t.integer "stir_air_window", default: 60
-    t.datetime "air_last_stirred_at"
     t.index ["thermostat_id"], name: "index_thermostat_schedules_on_thermostat_id"
   end
 
@@ -83,6 +82,7 @@ ActiveRecord::Schema.define(version: 20171002183604) do
     t.integer "gpio_fan_pin"
     t.string "username"
     t.string "password_digest"
+    t.datetime "air_last_stirred_at"
   end
 
 end
