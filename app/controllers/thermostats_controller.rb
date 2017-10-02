@@ -78,6 +78,11 @@ class ThermostatsController < ApplicationController
       format.json { render :json => @thermostat_for_json }
     end
   end
+  
+  def reset_filter_runtime
+    @thermostat.update_attributes( filter_runtime: 0 )
+    redirect_to root_path
+  end
 
   def log_current_data
     @history = ThermostatHistory.now_for_thermostat( @thermostat ).first

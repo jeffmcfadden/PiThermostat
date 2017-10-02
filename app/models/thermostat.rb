@@ -174,6 +174,7 @@ class Thermostat < ApplicationRecord
 
     self.update_column( :running, true )
     self.update_column( :air_last_stirred_at, Time.now )
+    self.update_column( :filter_runtime, filter_runtime.to_i + 1 )
   end
 
   def _turn_cool_off
@@ -195,6 +196,7 @@ class Thermostat < ApplicationRecord
 
     self.update_column( :running, true )
     self.update_column( :air_last_stirred_at, Time.now )
+    self.update_column( :filter_runtime, filter_runtime.to_i + 1 )
   end
 
   def _turn_heat_off
@@ -216,6 +218,7 @@ class Thermostat < ApplicationRecord
 
     self.update_column( :running, false )
     self.update_column( :air_last_stirred_at, Time.now )
+    self.update_column( :filter_runtime, filter_runtime.to_i + 1 )
   end
 
   def _turn_fan_off

@@ -41,6 +41,13 @@
           - if @thermostat.thermostat_histories.today.present?
             = render partial: "history", locals: { history: @thermostat.thermostat_histories.today.first }
 
+      .row{ style: "margin-top: 1em;" }
+        .col-md-12
+          .small
+            Filter Runtime: #{(@thermostat.filter_runtime / 60.0).round(1)} hours
+            &nbsp;&nbsp;&nbsp;
+            = link_to "Reset", reset_filter_runtime_path, method: :post
+
 
       .row{ style: "margin-top: 4em;" }
         .col-md-2
