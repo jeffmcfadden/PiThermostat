@@ -9,7 +9,7 @@ gem 'rails', '>= 5.1.0'
 gem 'pg'
 
 gem 'bootstrap-sass', '~> 3.1.1'
-gem 'haml', '~> 4.0.5'
+gem 'haml', '>= 5.0'
 
 # Use SCSS for stylesheets
 gem 'sass-rails'
