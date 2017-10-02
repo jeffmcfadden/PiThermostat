@@ -150,7 +150,7 @@ class Thermostat < ApplicationRecord
   end
   
   def should_stir_air?
-    active_schedule.stir_air? && ((Time.now - air_last_stirred_at) > active_schedule.stir_air_window)
+    active_schedule.stir_air? && ((Time.now - air_last_stirred_at) > (active_schedule.stir_air_window * 60))
   end
 
   def on_override?
