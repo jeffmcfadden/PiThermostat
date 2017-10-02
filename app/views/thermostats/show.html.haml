@@ -37,6 +37,11 @@
             - else
               %span{ style: "color: #AAA;" }
                 Not Running
+                
+                - if @thermostat.active_schedule.stir_air?
+                  &nbsp;&nbsp;
+                  Air last stirred #{@thermostat.air_last_stirred_at.strftime("%b %-d, %Y %-l:%M%P")}
+                
         .col-md-3
           - if @thermostat.thermostat_histories.today.present?
             = render partial: "history", locals: { history: @thermostat.thermostat_histories.today.first }
