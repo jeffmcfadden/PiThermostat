@@ -101,6 +101,10 @@ class Thermostat < ApplicationRecord
   def perform_thermostat_logic!
     return unless current_temperature
 
+    if should_stir_air?
+      self.update_columns( override_until: active_schedule.stir_air_window.minutes.from_now, override_mode: :override_mode_fan )
+    end
+
     # First, make sure the mode is set correctly in case we just switched modes.
     if on_override?
       if self.mode.to_s != self.override_mode.to_s.gsub( 'override_mode_', '' )
@@ -108,7 +112,7 @@ class Thermostat < ApplicationRecord
         self.update_column( :mode, mode_value )
 
         _turn_all_off # Turn everything off since we'll be toggling modes here.
-      end
+      end 
     else
       if self.active_schedule_rule.mode != self.mode
         mode_value = Thermostat.modes[self.active_schedule_rule.mode]
@@ -144,6 +148,10 @@ class Thermostat < ApplicationRecord
     end
 
   end
+  
+  def should_stir_air?
+    active_schedule.stir_air? && ((Time.now - air_last_stirred_at) > stir_air_window)
+  end
 
   def on_override?
     self.override_until.present? && self.override_until > Time.now
@@ -165,6 +173,7 @@ class Thermostat < ApplicationRecord
     end
 
     self.update_column( :running, true )
+    self.update_column( :air_last_stirred_at, Time.now )
   end
 
   def _turn_cool_off
@@ -185,6 +194,7 @@ class Thermostat < ApplicationRecord
     end
 
     self.update_column( :running, true )
+    self.update_column( :air_last_stirred_at, Time.now )
   end
 
   def _turn_heat_off
@@ -205,6 +215,7 @@ class Thermostat < ApplicationRecord
     end
 
     self.update_column( :running, false )
+    self.update_column( :air_last_stirred_at, Time.now )
   end
 
   def _turn_fan_off
