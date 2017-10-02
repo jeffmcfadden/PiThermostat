@@ -10,6 +10,13 @@
       %i.fa.fa-arrow-left
       Back
 
+.row{style: "margin-top: 1em"}
+  .col-md-12
+    .small
+      - if @thermostat_schedule.stir_air?
+        Will Stir air for #{@thermostat_schedule.stir_air_minutes} minutes after #{@thermostat_schedule.stir_air_window} minutes of stillness.
+      - else
+        Will not attempt to stir air.
 
 .row
   .col-md-12

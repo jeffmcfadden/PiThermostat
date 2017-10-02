@@ -102,7 +102,7 @@ class Thermostat < ApplicationRecord
     return unless current_temperature
 
     if should_stir_air?
-      self.update_columns( override_until: active_schedule.stir_air_window.minutes.from_now, override_mode: :override_mode_fan )
+      self.update_columns( override_until: active_schedule.stir_air_minutes.minutes.from_now, override_mode: :override_mode_fan )
     end
 
     # First, make sure the mode is set correctly in case we just switched modes.
@@ -150,7 +150,7 @@ class Thermostat < ApplicationRecord
   end
   
   def should_stir_air?
-    active_schedule.stir_air? && ((Time.now - air_last_stirred_at) > stir_air_window)
+    active_schedule.stir_air? && ((Time.now - air_last_stirred_at) > active_schedule.stir_air_window)
   end
 
   def on_override?

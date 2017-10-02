@@ -3,7 +3,7 @@ class ThermostatsController < ApplicationController
 
   before_action :ensure_authentication, except: [:update_current_temperature, :log_current_data]
 
-  before_filter :load_thermostat, except: [:new, :create]
+  before_action :load_thermostat, except: [:new, :create]
 
   def new
     @thermostat = Thermostat.new

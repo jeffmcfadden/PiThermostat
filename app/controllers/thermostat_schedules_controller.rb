@@ -3,7 +3,7 @@ class ThermostatSchedulesController < ApplicationController
 
   before_action :ensure_authentication, except: []
   
-  before_filter :load_thermostat, :load_thermostat_schedule
+  before_action :load_thermostat, :load_thermostat_schedule
 
   def index
     @thermostat_schedules = ThermostatSchedule.order(:name)
@@ -44,7 +44,7 @@ class ThermostatSchedulesController < ApplicationController
   private
 
   def thermostat_schedule_params
-    params.require( :thermostat_schedule ).permit( :name )
+    params.require( :thermostat_schedule ).permit( :name, :stir_air, :stir_air_minutes, :stir_air_window )
   end
 
   def load_thermostat_schedule

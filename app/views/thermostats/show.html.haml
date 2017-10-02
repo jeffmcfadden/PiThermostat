@@ -18,7 +18,7 @@
             %h1{style: 'font-size: 2em'} No Current Temperature
 
           .small
-            Target: #{@thermostat.target_temperature.round(2)} °F / #{@thermostat.hysteresis}
+            Target: #{@thermostat.target_temperature&.round(2)} °F / #{@thermostat.hysteresis}
 
           - if @thermostat.on_override?
             .small

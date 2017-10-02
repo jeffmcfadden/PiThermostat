@@ -1,6 +1,6 @@
 class ThermostatScheduleRulesController < ApplicationController
 
-  before_filter :load_thermostat, :load_thermostat_schedule, :load_thermostat_schedule_rule
+  before_action :load_thermostat, :load_thermostat_schedule, :load_thermostat_schedule_rule
 
   before_action :ensure_authentication, except: []  
 

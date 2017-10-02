@@ -5,6 +5,21 @@
       = f.text_field :name, class: "form-control ", placeholder: "Default, Out of Town, etc."
 
   .form-group
+    = f.label :stir_air, class: "control-label col-sm-2"
+    .col-sm-10
+      = f.check_box :stir_air, class: "form-control "
+
+  .form-group
+    = f.label :stir_air_window, class: "control-label col-sm-2"
+    .col-sm-10
+      = f.text_field :stir_air_window, class: "form-control ", placeholder: "Value in minutes. i.e. Stir air if system hasn't been running for N minutes."
+
+  .form-group
+    = f.label :stir_air_minutes, class: "control-label col-sm-2"
+    .col-sm-10
+      = f.text_field :stir_air_minutes, class: "form-control ", placeholder: "i.e. Run fan for N minutes if air needs stirring."
+
+  .form-group
     .col-sm-10.col-sm-offset-2
       %button.btn.btn-primary.form-control{ type: "submit" }
         = @thermostat_schedule.persisted? ? "Save" : "Create"
