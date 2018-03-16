@@ -12,114 +12,87 @@ The software to use a RaspberryPi as a Thermostat for just about any HVAC unit o
 *  Temperature Sensors: http://amzn.to/1JDZhg1 (Any DS18B20 sensor will work)
 
 
-## Do these things after boot:
+## Setup
 
-    sudo modprobe w1-gpio
-    sudo modprobe w1-therm
-    gpio mode 0 out
-    gpio write 0 1
-    gpio mode 1 out
-    gpio write 1 1
-    gpio mode 2 out
-    gpio write 2 1
-    gpio mode 3 out
-    gpio write 3 1
+Before proceeding you'll need a Raspberry Pi running a recent version of raspbian that also has these services set up:
 
-## Unicorn
+* Ruby (2.5.x)
+* PostgreSQL
+* WiringPi
+* Nginx
 
+For instructions on setting up your Raspberry Pi and installing the necessary prerequisite software see [PiSetup](https://github.com/mcfadden/PiSetup).
 
-    Start:
+If you use PiSetup, also run the "Rails Misc" option and configure it as shown below:
 
-    bundle exec unicorn_rails -c config/unicorn.rb -E production -D
+* Application Name: thermostat
+* Environment: production
+* Web Server: Unicorn
+* Systemd Scripts:
+  * Sidekiq
+  * Unicorn
+* Create Nginx Configuration: Yes
+* System Gems:
+  * bundler
+* Setup Logrotate: Yes
+* Reboot Raspberry Pi: Yes
 
-    Restart:
+At this point, you are ready to install PiThermostat:
 
-    sudo kill -HUP `cat /www/thermostat/pids/unicorn.pid`
-
-    OR
-
-    sudo restart unicorn # If you're using upstart
-
-
-## Setting up the Pi:
-
-    sudo apt-get update
-
-    mkdir installs
-    cd installs
-    sudo apt-get install git wget
-    wget "https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.3.tar.gz"
-    cd ruby-2.3.3
-    sudo apt-get install autoconf
-    autoconf
-    sudo apt-get install gcc g++ make ruby1.9.1 bison libyaml-dev libssl-dev libffi-dev zlib1g-dev libxslt-dev libxml2-dev libpq-dev zip nodejs vim libreadline-dev
-    ./configure && make clean && make -j4 && sudo make install
-
-    sudo apt-get install postgresql postgresql-contrib libpq-dev
-
-    # Install WiringPi: http://wiringpi.com/download-and-install/
-
-    sudo -i -u postgres
-    createuser -s -P rails
-    exit
-
-    sudo vim /etc/postgresql/9.4/main/pg_hba.conf
-
-    # change all the 'peer' to 'md5' NOT THE LOCAL ONE, LEAVE TO TRUST OR EVERYTHING BREAKS
-
-    sudo service postgresql restart
-
-    sudo mkdir /www
-    sudo chown pi:pi /www
-    cd /www
-    sudo git clone https://github.com/jeffmcfadden/PiThermostat.git
-    mv PiThermostat thermostat
-    cd thermostat
-    echo "install: --no-rdoc --no-ri" >> ~/.gemrc
-    echo "update:  --no-rdoc --no-ri" >> ~/.gemrc
-    sudo gem install bundler
+    git clone https://github.com/jeffmcfadden/PiThermostat.git /www/thermostat
+    cd /www/thermostat
     bundle install
-    RAILS_ENV=production bundle exec rake db:create
-    RAILS_ENV=production bundle exec rake db:migrate
-
-    sudo apt-get install nginx
-
-    # install the thermostat.conf
+    # setup your application.yml:
+    cp config/application.yml.sample config/application.yml
+    nano config/application.yml
+    # Change it as necessary, then save it
+    bundle exec rake db:create db:schema:load db:migrate
+    # install the thermostat.conf nginx config
+    sudo cp /www/thermostat/install_misc/thermostat.conf /etc/nginx/sites-available/thermostat.conf
+    # If you didn't use PiSetup, you'll need to run these:
+    #   sudo rm /etc/nginx/sites-enabled/default
+    #   sudo ln -s /etc/nginx/sites-available/$safeAppName.conf /etc/nginx/sites-enabled
     # install the crontab
-
-    sudo nginx
-    # After this I had to remove 'default' from /etc/init/nginx/sites-enabled
-
-    # this should work now:
-    rails c production
-
-    # setup your application.yml - see config/application.yml.sample for a sample
-
-    RAILS_ENV=production bundle exec rake assets:precompile
-
+    (crontab -l ; cat /www/thermostat/install_misc/crontab; echo) | crontab -
+    # Precompile your assets
+    bundle exec rake assets:precompile
+    # Set up the pids directory
     mkdir /www/thermostat/pids/
-
-    # RPi 2 (or any kernel 3.18.8 and higer)
-    # You have to edit your /boot/config.txt file and add this at the bottom:
-    # dtoverlay=w1-gpio
-
-    # reboot
+    # Enable the one wire bus on GPIO
+    grep "dtoverlay=w1-gpio" /boot/config.txt || echo "dtoverlay=w1-gpio" | sudo tee --append /boot/config.txt
+    # Install the setup_1_wire_bus systemd service
+    sudo cp /www/thermostat/install_misc/setup_1_wire_bus.service /lib/systemd/system/setup_1_wire_bus.service
+    # Install the unicorn systemd service if you didn't use PiSetup
+    # sudo cp /www/thermostat/install_misc/unicorn.service /lib/systemd/system/unicorn.service
+    # Enable both services:
+    sudo systemctl enable setup_1_wire_bus.service
+    sudo systemctl enable unicorn.service
+    # Reboot your pi:
     sudo shutdown -r now
 
-    # If you want to run everything now:
-    bundle exec unicorn_rails -c config/unicorn.rb -E production -D
+Once it boots back up you should be able to follow the web based setup process by visiting http://[your raspberry pi]/
 
-    # Upstart - DONT DO THIS FOR NOW. WILL KILL YOUR PI
+### Wiring
 
-    # sudo apt-get install upstart # Yes, it's okay, even given the warning. NOT ACTUALLY OK. DONT DO THIS
+  The OneWire bus data line is on pin 4. You can view a wiring diagram for One Wire [here](https://pinout.xyz/pinout/1_wire)
 
-    # Copy the unicorn.conf file to /etc/init
-    # Copy the setup_1_wire_bus.conf file to /etc/init
+  The GPIO pins used by default are 0, 1, and 2. We using the WiringPi pinout. [Here is a diagram](https://pinout.xyz/pinout/wiringpi).
 
-    # Reboot for Upstart to take effect.
-    sudo shutdown -r now
+  You may use other GPIO pins as long as they don't interfere with the OneWire bus, and as long as you update the pins referenced in `setup_1_wire_bus.service`.
 
-    # Once Running, follow the web based setup process by visiting http://[your raspberry pi]/
+  You may select which GPIO pins connect to `cool`, `heat`, and `fan` via the settings interface, so the specifics there do not matter.
+
+### Debugging
+
+  If things aren't working right, here are some log files you might want to look into:
+
+  Syslog: `/var/log/syslog`
+  Unicorn log: `/www/thermostat/log/unicorn.log`
+  Rails log: `/www/thermostat/log/production.log`
+
+  If you need to, you can also open a rails console:
+
+    cd /www/thermostat && bundle exec rails c
 
 ## Upgrading
 
@@ -127,8 +100,9 @@ Upgrading from a previous version may involve these steps:
 
     cd /www/thermostat
     git pull
-    RAILS_ENV=production bundle install
-    RAILS_ENV=production bundle exec rake db:migrate
+    bundle install
+    bundle exec rake db:migrate
+    bundle exec rake assets:precompile
     sudo shutdown -r now
 
 Be sure to upgrade the homebridge plugin to the latest version as well

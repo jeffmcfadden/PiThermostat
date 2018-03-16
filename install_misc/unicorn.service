@@ -1,0 +1,29 @@
+[Unit]
+Description=Unicorn HTTP Server
+After=network.target
+
+# Uncomment for socket activation (see below)
+# Requires=unicorn.socket
+
+[Service]
+# Foreground process (do not use --daemon in ExecStart or config.rb)
+Type=simple
+
+# Preferably configure a non-privileged user
+User=pi
+
+# Specify the path to your puma application root
+WorkingDirectory=/www/thermostat
+
+# Helpful for debugging socket activation, etc.
+Environment=RAILS_ENV=production
+Environment=RACK_ENV=production
+
+# The command to start Unicorn with a config file (in WorkingDirectory) and
+# comparable `bind` directives
+ExecStart=/usr/local/bin/bundle exec unicorn_rails -c /www/thermostat/config/unicorn.rb -E production
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
