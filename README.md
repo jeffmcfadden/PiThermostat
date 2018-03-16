@@ -82,6 +82,13 @@ Once it boots back up you should be able to follow the web based setup process b
 
   You may select which GPIO pins connect to `cool`, `heat`, and `fan` via the settings interface, so the specifics there do not matter.
 
+  **Note**
+  If you are using your OneWire bus in parasitic power mode, you need to change this line in `/boot/config.txt`
+
+  Change `dtoverlay=w1-gpio` to `dtoverlay=w1-gpio,pullup=on`
+
+  You will need to reboot for this to take effect.
+
 ### Debugging
 
   If things aren't working right, here are some log files you might want to look into:
