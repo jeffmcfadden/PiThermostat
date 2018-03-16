@@ -1,23 +1,23 @@
 %dt
   High Temp
 %dd
-  = history.high_temperature.round(2)
+  = history.high_temperature&.round(2)
   °F
 
 %dt
   Low Temp
 %dd
-  = history.low_temperature.round(2)
+  = history.low_temperature&.round(2)
   °F
 
 %dt
   Mean Temp
 %dd
-  = history.mean_temperature.round(2)
+  = history.mean_temperature&.round(2)
   °F
 
 %dt
   Runtime
 %dd
-  = (history.runtime / 60.0 ).round(1)
+  = (history.runtime.to_i / 60.0 ).round(1)
   hours

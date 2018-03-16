@@ -37,11 +37,11 @@
             - else
               %span{ style: "color: #AAA;" }
                 Not Running
-                
-                - if @thermostat.active_schedule.stir_air?
+
+                - if @thermostat.active_schedule&.stir_air?
                   &nbsp;&nbsp;
                   Air last stirred #{@thermostat.air_last_stirred_at.strftime("%b %-d, %Y %-l:%M%P")}
-                
+
         .col-md-3
           - if @thermostat.thermostat_histories.today.present?
             = render partial: "history", locals: { history: @thermostat.thermostat_histories.today.first }
@@ -129,6 +129,6 @@
 
     - if @thermostat.thermostat_histories.today.count > 0
       .row
-        = line_chart [{ name: "Temperature", data: @thermostat.thermostat_histories.today.first.data_for_chartkick}], library: { curveType: 'none', lineWidth: '0.5', pointSize: 0 }, min: @thermostat.thermostat_histories.today.first.low_temperature - 1, max: @thermostat.thermostat_histories.today.first.high_temperature + 1, height: '400px'
+        = line_chart [{ name: "Temperature", data: @thermostat.thermostat_histories.today.first.data_for_chartkick}], library: { curveType: 'none', lineWidth: '0.5', pointSize: 0 }, min: @thermostat.thermostat_histories.today.first.low_temperature.to_f - 1, max: @thermostat.thermostat_histories.today.first.high_temperature.to_f + 1, height: '400px'
     - else
       %em No data found for today
