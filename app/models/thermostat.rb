@@ -30,6 +30,7 @@ class Thermostat < ApplicationRecord
       c = cRaw / 1000.0
       f = (c * (9.0/5.0) ) + 32
 
+      return if f >= 180.0 # Some probes show 85c / 185f when they fail to read in parasitic power mode
       self.update_attributes(current_temperature: f)
     else
       puts "Skipping temperature update. Not in production mode."
@@ -112,7 +113,7 @@ class Thermostat < ApplicationRecord
         self.update_column( :mode, mode_value )
 
         _turn_all_off # Turn everything off since we'll be toggling modes here.
-      end 
+      end
     else
       if self.active_schedule_rule.mode != self.mode
         mode_value = Thermostat.modes[self.active_schedule_rule.mode]
@@ -148,7 +149,7 @@ class Thermostat < ApplicationRecord
     end
 
   end
-  
+
   def should_stir_air?
     active_schedule.stir_air? && ((Time.now - air_last_stirred_at) > (active_schedule.stir_air_window * 60))
   end
