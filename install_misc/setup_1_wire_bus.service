@@ -1,0 +1,10 @@
+[Unit]
+Description=Setup the one-wire bus on boot
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "modprobe w1-gpio && modprobe w1-therm && gpio mode 0 out && gpio write 0 1 && gpio mode 1 out && gpio write 1 1 && gpio mode 2 out && gpio write 2 1 && gpio mode 3 out && gpio write 3 1"
+
+[Install]
+WantedBy=multi-user.target
