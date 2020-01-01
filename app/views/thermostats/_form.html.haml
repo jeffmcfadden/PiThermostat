@@ -1,4 +1,4 @@
-= simple_form_for(@thermostat, url: thermostat_path, html: {class: 'form-horizontal' }) do |f|
+= form_with model: @thermostat, url: thermostat_path, class: 'form-horizontal' do |f|
   .form-group
     = f.label :name, class: "control-label col-sm-2"
     .col-sm-10
@@ -10,7 +10,7 @@
   .form-group
     = f.label "Temperature Sensor ID", class: "control-label col-sm-2"
     .col-sm-10
-      = f.input :temperature_sensor_id, collection: temperature_sensor_ids_from_system, as: :select, label: false, class: "form-control", include_blank: false
+      = f.select :temperature_sensor_id, temperature_sensor_ids_from_system, class: "form-control", include_blank: false
 
   .form-group
     .col-sm-2
@@ -20,15 +20,15 @@
         %i.fa.fa-external-link
 
     .col-sm-3
-      = f.input :gpio_cool_pin, collection: 0..20, as: :select, label: false, class: "form-control", input_html: {style: "width: 100%"}
+      = f.select :gpio_cool_pin, 0..20, class: "form-control", input_html: {style: "width: 100%"}
       %small Cool
 
     .col-sm-3
-      = f.input :gpio_heat_pin, collection: 0..20, as: :select, label: false, class: "form-control", input_html: {style: "width: 100%"}
+      = f.select :gpio_heat_pin, 0..20, class: "form-control", input_html: {style: "width: 100%"}
       %small Heat
 
     .col-sm-3
-      = f.input :gpio_fan_pin, collection: 0..20, as: :select, label: false, class: "form-control", input_html: {style: "width: 100%"}
+      = f.select :gpio_fan_pin, 0..20, class: "form-control", input_html: {style: "width: 100%"}
       %small Fan
 
   .form-group

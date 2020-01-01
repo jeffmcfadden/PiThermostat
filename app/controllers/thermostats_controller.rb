@@ -1,7 +1,7 @@
 class ThermostatsController < ApplicationController
-  respond_to :html, :json
+  # respond_to :html, :json
 
-  before_action :ensure_authentication, except: [:update_current_temperature, :log_current_data]
+  # before_action :ensure_authentication, except: [:update_current_temperature, :log_current_data]
 
   before_action :load_thermostat, except: [:new, :create]
 

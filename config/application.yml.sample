@@ -1,6 +1,0 @@
-DATABASE_USER: "rails"
-DATABASE_PASS: ""
-
-# Generate a key and put it here:
-# `SecureRandom.base64(60)` will generate a secure key for you.
-# SECRET_KEY_BASE:
