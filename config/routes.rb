@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  devise_for :users, path: 'auth'
+  
   resource :thermostat, only: [:new, :create, :edit, :update] do
     member do
       post :migrate_settings
@@ -20,6 +22,8 @@ Rails.application.routes.draw do
     end
     resources :thermostat_schedule_rules
   end
+  
+  resources :users
 
   get 'thermostat' => 'thermostats#show', format: :json
   root 'thermostats#show'

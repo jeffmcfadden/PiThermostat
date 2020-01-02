@@ -1,8 +1,7 @@
 class ThermostatSchedulesController < ApplicationController
   # respond_to :html, :json
 
-  before_action :ensure_authentication, except: []
-  
+  before_action :ensure_authentication!, except: []
   before_action :load_thermostat, :load_thermostat_schedule
 
   def index

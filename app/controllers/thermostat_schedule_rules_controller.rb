@@ -1,8 +1,7 @@
 class ThermostatScheduleRulesController < ApplicationController
 
   before_action :load_thermostat, :load_thermostat_schedule, :load_thermostat_schedule_rule
-
-  before_action :ensure_authentication, except: []  
+  before_action :ensure_authentication!, except: []  
 
   def new
     @thermostat_schedule_rule = @thermostat_schedule.thermostat_schedule_rules.new

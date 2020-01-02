@@ -4,6 +4,7 @@ class ThermostatsController < ApplicationController
   # before_action :ensure_authentication, except: [:update_current_temperature, :log_current_data]
 
   before_action :load_thermostat, except: [:new, :create]
+  before_action :ensure_authentication!, except: [:new, :create, :show]
 
   def new
     @thermostat = Thermostat.new
@@ -33,6 +34,8 @@ class ThermostatsController < ApplicationController
 
   def show
     redirect_to new_thermostat_path and return unless @thermostat
+    redirect_to new_user_path and return unless User.count > 0
+    ensure_authentication!
 
     # Sheesh how slow is this going to be:
     @thermostat_for_json = JSON.parse( @thermostat.to_json )

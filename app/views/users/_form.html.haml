@@ -1,0 +1,17 @@
+= form_with model: @user, class: 'form-horizontal' do |f|
+  - if @user.errors
+    .errors
+      Error: #{@user.errors.full_messages.uniq.join(",")}
+
+  .form-group
+    = f.label "Email", class: "control-label col-sm-2"
+    .col-sm-5
+      = f.text_field :email, class: "form-control ", placeholder: "jane@example.com"
+
+    .col-sm-5
+      = f.password_field :password, class: "form-control ", placeholder: "password", value: nil
+
+  .form-group
+    .col-sm-12
+      %button.btn.btn-primary.form-control{ type: "submit" }
+        Save
