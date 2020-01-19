@@ -28,6 +28,10 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'devise'
 
+group :development do
+  gem "capistrano", "~> 3.11", require: false
+end
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
