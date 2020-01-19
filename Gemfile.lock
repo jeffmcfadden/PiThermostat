@@ -247,6 +247,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.4.1)
   byebug
   capistrano (~> 3.11)
+  capistrano-bundler (~> 1.6)
   capistrano-rails (~> 1.4)
   capybara (>= 2.15)
   chartkick
