@@ -24,12 +24,13 @@ gem 'jbuilder', '~> 2.7'
 gem 'haml', '>= 5.0'
 
 # Use Active Model has_secure_password
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '3.1.12'
 
 gem 'devise'
 
 group :development do
   gem "capistrano", "~> 3.11", require: false
+  gem "capistrano-rails", "~> 1.4", require: false
 end
 
 # Use Active Storage variant
