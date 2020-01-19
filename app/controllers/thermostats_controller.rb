@@ -1,10 +1,8 @@
 class ThermostatsController < ApplicationController
   # respond_to :html, :json
 
-  # before_action :ensure_authentication, except: [:update_current_temperature, :log_current_data]
-
   before_action :load_thermostat, except: [:new, :create]
-  before_action :ensure_authentication!, except: [:new, :create, :show]
+  before_action :ensure_authentication!, except: [:new, :create, :show, :update_current_temperature, :log_current_data]
 
   def new
     @thermostat = Thermostat.new
