@@ -2,7 +2,7 @@
 lock "~> 3.11.2"
 
 set :application, 'thermostat'
-set :repo_url, 'git@github.com:Lightstock/dwell-web.git'
+set :repo_url, 'git@github.com:jeffmcfadden/PiThermostat.git'
 
 # Default branch is :master
 set :branch, ENV.fetch('REVISION', 'master')
@@ -50,14 +50,7 @@ namespace :deploy do
       on roles(:web) do
         within release_path do
           with rails_env: fetch(:rails_env) do
-            # on OS X the equivalent pid-finding command is `ps | grep '/puma' | head -n 1 | awk {'print $1'}`
-
-            # This tells puma to kick off a phased restart, and falls back to a normal hard restart or start if necessary.
-            #execute "(sudo kill -s SIGUSR2 $(ps -C ruby -F | grep '/puma' | awk {'print $2'}))"
-            # execute "sudo pumactl --config-file /www/dwell/current/config/puma.rb phased-restart"
-            # execute "sudo pumactl --config-file /www/dwell/current/config/puma.rb phased-restart"
             execute "sudo systemctl restart puma.service"
-
             #" || sudo service puma restart || sudo service puma start"
           end
         end
@@ -66,10 +59,6 @@ namespace :deploy do
         within release_path do
           with rails_env: fetch(:rails_env) do
             execute "sudo systemctl restart sidekiq"
-            execute "sudo systemctl restart sidekiq-audio"
-            execute "sudo systemctl restart sidekiq-searchkick"
-            # execute "sudo restart sidekiq-media"
-            # execute "sudo restart clockwork"
           end
         end
       end
