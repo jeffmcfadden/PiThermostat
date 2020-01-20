@@ -55,15 +55,20 @@ namespace :deploy do
       on roles(:web) do
         within release_path do
           with rails_env: fetch(:rails_env) do
-            execute "sudo systemctl restart puma.service"
-            #" || sudo service puma restart || sudo service puma start"
+            # Systemd
+            # execute "sudo systemctl restart puma.service"
+            # Upstart
+            execute "sudo restart puma || sudo service puma start"
           end
         end
       end
       on roles(:background) do
         within release_path do
           with rails_env: fetch(:rails_env) do
-            execute "sudo systemctl restart sidekiq"
+            # Systemd
+            # execute "sudo systemctl restart sidekiq"
+            # Upstart
+            execute "sudo restart puma || sudo service puma start"
           end
         end
       end
