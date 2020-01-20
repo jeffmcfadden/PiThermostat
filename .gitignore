@@ -73,3 +73,4 @@ yarn-debug.log*
 .yarn-integrity
 
 /config/deploy/production.rb
+/config/database.yml
