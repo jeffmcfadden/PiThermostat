@@ -1,5 +1,5 @@
 .row
-  .col-md-12
+  .col-md-10
     %h1
       = link_to @thermostat_schedule.name, edit_thermostat_schedule_path(@thermostat_schedule)
       %small
@@ -9,6 +9,9 @@
     = link_to thermostat_schedules_path do
       %i.fa.fa-arrow-left
       Back
+  .col-md-2.text-right{ style: "padding-top: 1em;"}
+    = form_with url: duplicate_thermostat_schedule_path(@thermostat_schedule), method: :post do |f|
+      = f.submit "Duplicate Schedule", class: "btn btn-sm btn-info"
 
 .row{style: "margin-top: 1em"}
   .col-md-12

@@ -39,6 +39,20 @@ class ThermostatSchedulesController < ApplicationController
     redirect_to thermostat_schedules_path
   end
 
+  def duplicate
+    @new_schedule = @thermostat_schedule.dup
+    @new_schedule.name += " (copy)"
+    @new_schedule.active = false
+    @new_schedule.save
+    
+    @thermostat_schedule.thermostat_schedule_rules.each do |rule|
+      new_rule = rule.dup
+      new_rule.thermostat_schedule_id = @new_schedule.id
+      new_rule.save
+    end
+    
+    redirect_to [:edit, @new_schedule]
+  end
 
   private
 

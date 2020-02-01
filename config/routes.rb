@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :thermostat_schedules do
     member do
       post :make_active
+      post :duplicate
     end
     resources :thermostat_schedule_rules
   end
