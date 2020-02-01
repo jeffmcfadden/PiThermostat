@@ -4,8 +4,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session, prepend: true
 
   def ensure_authentication!
+    Current.api_request = false
+    
     if request.headers[:authorization].present?
       Current.user = User.find_by api_token: request.headers[:authorization].gsub( 'Bearer', '' ).strip
+      Current.api_request = Current.user.present?
     end
     
     authenticate_user! if Current.user.nil? 
