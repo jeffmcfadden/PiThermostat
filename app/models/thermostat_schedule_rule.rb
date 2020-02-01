@@ -1,5 +1,5 @@
 class ThermostatScheduleRule < ApplicationRecord
-  belongs_to :thermostat_schedule
+  belongs_to :thermostat_schedule, dependent: :destroy
 
   scope :active_on_any_day, -> {
     where( [ "sunday = ? OR monday = ? or tuesday = ? or wednesday = ? or thursday = ? or friday = ? or saturday = ?", true, true, true, true, true, true, true ] )

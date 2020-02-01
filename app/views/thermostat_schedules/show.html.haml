@@ -88,3 +88,10 @@
             = link_to "Edit", edit_thermostat_schedule_thermostat_schedule_rule_path(@thermostat_schedule, rule )
 
 
+.row
+  .col-xs-12.text-right
+    - unless @thermostat_schedule.active?
+      = link_to "Destroy Schedule", @thermostat_schedule, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger"
+    - else
+      %small
+        Cannot destroy this schedule while it is active.
