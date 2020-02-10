@@ -18,5 +18,7 @@ module PiThermostat
     
     config.assets.prefix "assets"
     config.assets.manifest "app/assets/config/manifest.js"
+    
+    config.time_zone = 'Arizona'
   end
 end
