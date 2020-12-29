@@ -12,7 +12,7 @@ threads min_threads_count, max_threads_count
 #
 # port        ENV.fetch("PORT") { 3000 }
 
-bind "unix:///www/thermostat/shared/pids/puma.sock"
+bind "unix:///www/thermostat/shared/puma.thermostat.sock"
 
 # Specifies the `environment` that Puma will run in.
 #

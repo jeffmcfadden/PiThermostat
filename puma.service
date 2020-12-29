@@ -30,8 +30,8 @@ WorkingDirectory=/www/thermostat/current
 
 Environment="RAILS_ENV=production"
 ExecStart=/usr/local/bin/bundle exec pumactl --config-file /www/thermostat/current/config/puma.rb start
-User=ubuntu
-Group=ubuntu
+User=pi
+Group=pi
 #UMask=0002
 
 # if we crash, restart
