@@ -1,4 +1,4 @@
-class AddThermostatSettings < ActiveRecord::Migration
+class AddThermostatSettings < ActiveRecord::Migration[4.2]
   def change
     add_column :thermostats, :temperature_sensor_id, :string,  default: nil
     add_column :thermostats, :gpio_cool_pin,         :integer, default: nil

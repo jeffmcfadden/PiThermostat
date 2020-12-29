@@ -1,4 +1,4 @@
-class CreateThermostatSchedules < ActiveRecord::Migration
+class CreateThermostatSchedules < ActiveRecord::Migration[4.2]
   def change
     create_table :thermostat_schedules do |t|
       t.string :name

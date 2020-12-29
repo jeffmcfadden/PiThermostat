@@ -1,4 +1,4 @@
-class CreateThermostatHistories < ActiveRecord::Migration
+class CreateThermostatHistories < ActiveRecord::Migration[4.2]
   def change
     create_table :thermostat_histories do |t|
       t.integer :thermostat_id

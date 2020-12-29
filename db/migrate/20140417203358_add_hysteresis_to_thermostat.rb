@@ -1,4 +1,4 @@
-class AddHysteresisToThermostat < ActiveRecord::Migration
+class AddHysteresisToThermostat < ActiveRecord::Migration[4.2]
   def change
     add_column :thermostats, :hysteresis, :float
   end

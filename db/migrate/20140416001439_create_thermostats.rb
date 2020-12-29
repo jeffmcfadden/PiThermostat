@@ -1,4 +1,4 @@
-class CreateThermostats < ActiveRecord::Migration
+class CreateThermostats < ActiveRecord::Migration[4.2]
   def change
     create_table :thermostats do |t|
       t.string :name

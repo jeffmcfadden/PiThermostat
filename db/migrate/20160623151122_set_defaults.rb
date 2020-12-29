@@ -1,4 +1,4 @@
-class SetDefaults < ActiveRecord::Migration
+class SetDefaults < ActiveRecord::Migration[4.2]
   def change
     change_column :thermostat_schedule_rules, :sunday,    :boolean, default: false
     change_column :thermostat_schedule_rules, :monday,    :boolean, default: false

@@ -1,4 +1,4 @@
-class CreateThermostatScheduleRules < ActiveRecord::Migration
+class CreateThermostatScheduleRules < ActiveRecord::Migration[4.2]
   def change
     create_table :thermostat_schedule_rules do |t|
       t.references :thermostat_schedule, index: true
