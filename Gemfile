@@ -6,9 +6,9 @@ ruby '>= 2.5.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 # Use postgresql as the database for Active Record
-gem 'pg', '>= 0.18', '< 2.0'
+gem 'pg'
 # Use Puma as the app server
-gem 'puma', '~> 4.1'
+gem 'puma', '~> 5'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 gem 'bootstrap-sass', '~> 3.4.1'
