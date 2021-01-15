@@ -31,7 +31,10 @@ class Thermostat < ApplicationRecord
       f = (c * (9.0/5.0) ) + 32
 
       return if f >= 180.0 # Some probes show 85c / 185f when they fail to read in parasitic power mode
-      self.update_attributes(current_temperature: f)
+      
+      average_f = ((current_temperature.to_f * 9) + f) / 10.0 # 'Moving average' filter.
+      
+      self.update_attributes(current_temperature: average_f)
     else
       puts "Skipping temperature update. Not in production mode."
     end
