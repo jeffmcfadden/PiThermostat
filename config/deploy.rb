@@ -58,7 +58,7 @@ namespace :deploy do
             # Systemd
             # execute "sudo systemctl restart puma.service"
             # Upstart
-            execute "sudo restart puma || sudo service puma start"
+            execute "sudo systemctl restart puma || sudo systemctl start puma"
           end
         end
       end
@@ -68,7 +68,7 @@ namespace :deploy do
             # Systemd
             # execute "sudo systemctl restart sidekiq"
             # Upstart
-            execute "sudo restart puma || sudo service puma start"
+            execute "sudo systemctl restart puma || sudo systemctl start puma"
           end
         end
       end
