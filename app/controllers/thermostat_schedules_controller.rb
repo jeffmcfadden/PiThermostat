@@ -25,7 +25,7 @@ class ThermostatSchedulesController < ApplicationController
   end
 
   def update
-    @thermostat_schedule.update_attributes( thermostat_schedule_params )
+    @thermostat_schedule.update( thermostat_schedule_params )
     redirect_to @thermostat_schedule
   end
 

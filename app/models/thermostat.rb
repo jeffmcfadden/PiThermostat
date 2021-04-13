@@ -34,7 +34,7 @@ class Thermostat < ApplicationRecord
       
       average_f = ((current_temperature.to_f * 9) + f) / 10.0 # 'Moving average' filter.
       
-      self.update_attributes(current_temperature: average_f)
+      self.update(current_temperature: average_f)
     else
       puts "Skipping temperature update. Not in production mode."
     end

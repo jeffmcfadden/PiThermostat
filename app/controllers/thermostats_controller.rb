@@ -21,10 +21,10 @@ class ThermostatsController < ApplicationController
       params[:thermostat][:override_until] = params[:override_value].to_f.hours.from_now
     end
 
-    @thermostat.update_attributes( thermostat_params )
+    @thermostat.update( thermostat_params )
 
     if params[:thermostat][:password].present? && params[:thermostat][:username].present?
-      @thermostat.update_attributes(username: params[:thermostat][:username], password: params[:thermostat][:password])
+      @thermostat.update(username: params[:thermostat][:username], password: params[:thermostat][:password])
     end
 
     redirect_to root_path
@@ -49,7 +49,7 @@ class ThermostatsController < ApplicationController
   end
 
   def im_hot
-    @thermostat.update_attributes( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature - 3.0, override_hysteresis: 1.0, override_mode: "override_mode_#{@thermostat.mode}".to_sym  )
+    @thermostat.update( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature - 3.0, override_hysteresis: 1.0, override_mode: "override_mode_#{@thermostat.mode}".to_sym  )
 
     # Sheesh how slow is this going to be:
     @thermostat_for_json = JSON.parse( @thermostat.to_json )
@@ -65,7 +65,7 @@ class ThermostatsController < ApplicationController
   end
 
   def im_cold
-    @thermostat.update_attributes( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature + 3.0, override_hysteresis: 1.0, override_mode: "override_mode_#{@thermostat.mode}".to_sym  )
+    @thermostat.update( override_until: 15.minutes.from_now, override_target_temperature: @thermostat.target_temperature + 3.0, override_hysteresis: 1.0, override_mode: "override_mode_#{@thermostat.mode}".to_sym  )
 
     # Sheesh how slow is this going to be:
     @thermostat_for_json = JSON.parse( @thermostat.to_json )
@@ -81,7 +81,7 @@ class ThermostatsController < ApplicationController
   end
   
   def reset_filter_runtime
-    @thermostat.update_attributes( filter_runtime: 0 )
+    @thermostat.update( filter_runtime: 0 )
     redirect_to root_path
   end
 

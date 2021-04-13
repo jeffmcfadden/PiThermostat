@@ -8,7 +8,7 @@ class ThermostatSchedule < ApplicationRecord
 
   def make_active!
     thermostat.thermostat_schedules.update_all(active: false)
-    update_attributes(active: true)
+    update(active: true)
   end
 
   def make_active_if_no_other_schedules_active
